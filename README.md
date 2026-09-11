@@ -21,10 +21,12 @@
 - ✅ 规则文件全部自托管，整套配置自包含，不依赖任何第三方仓库
 - ✅ **一键部署到 Vercel 即可用**，不需要配置任何后端 → [DEPLOY.md](DEPLOY.md)
 - ✅ 网页上可以勾选规则集、添加自定义规则，设置编码进订阅链接，可直接分享
-- ✅ 108 项自动化测试，包括**用真的 mihomo 内核校验生成的配置**
+- ✅ 170 项自动化测试，包括**用真的 mihomo 内核校验配置**、**真的把 PAC 跑起来验证分流**
 
 ### 支持的功能
 
++ **校园网内开着代理也能正常上浙大内网**（浙大域名走校内 DNS 解析）
++ 支持**不开系统代理**的用法：用 PAC 只让浏览器走代理，其它软件不受影响
 + ZJU 内网资源/学术资源分流（直连访问 / 内网穿透访问）
 + 节点自动选择 / 故障转移 / 负载均衡
 + Telegram、Youtube、Netflix、动画疯、哔哩哔哩（港澳台解锁）
@@ -36,6 +38,57 @@
 支持解析的协议：
 `SS` `SSR` `VMess` `VLESS` `Trojan` `Hysteria` `Hysteria2` `TUIC` `Socks5` `HTTP(S)`，
 订阅格式支持 base64 节点列表、Clash YAML 配置、明文链接列表。
+
+---
+
+## 在校园网里怎么用（重要）
+
+**如果你在宿舍 / 实验室 / ZJUWLAN 里上网，一定要选「校园网内」这个场景。**
+
+### 为什么开了代理就上不了内网？
+
+不是规则的问题，是 **DNS** 的问题。
+
+Clash 默认用公共 DNS（阿里 DoH 等）解析域名。但浙大有一批域名 —— `zju.edu.cn`、
+`cc98.org`、`zjusec.com` —— **只有校内 DNS 才解析得出正确地址**，公共 DNS 要么查不到、
+要么返回一个外网 IP。所以哪怕规则写着「zju.edu.cn 直连」，Clash 也解析不到地方，照样连不上。
+
+浙大校内 DNS 是 **`10.10.0.21`**。
+
+### 两种用法，任选一种
+
+**方式一：开系统代理（推荐，所有软件都生效）**
+
+在网页上把「你在哪里用」选成 **校园网内**，再生成订阅链接。
+这样配置会：
+- 把 `10.10.0.21` 设为主 DNS
+- 对浙大域名强制只用校内 DNS 解析（关键）
+- 改用 `redir-host` 而不是 `fake-ip`，内网域名解析更可靠
+- 不配置 `fallback`，避免内网域名被公共 DNS 的结果顶掉
+
+结果：系统代理开着，外网走代理，浙大域名自动直连且解析正确。
+
+**方式二：不开系统代理，只用 PAC（只影响浏览器）**
+
+适合「不想让代理接管整个系统」的情况：
+
+1. Clash 保持运行（提供 `127.0.0.1:7890`），但**不要**打开系统代理开关
+2. 浏览器 / 系统设置里填「自动代理配置 URL」为 `http://127.0.0.1:8080/proxy.pac`
+   - macOS：系统设置 → 网络 → 详细信息 → 代理 → 自动代理配置
+   - Windows：设置 → 网络和 Internet → 代理 → 使用自动配置脚本
+3. 完成
+
+这种方式的好处：直连的请求**根本不经过 Clash**，DNS 用系统（也就是校园网）的，
+所以校内网站天然正常，其它软件（浙大客户端、VPN、终端）完全不受影响。
+
+PAC 有两种模式：
+
+| 模式 | 行为 | 适合 |
+| --- | --- | --- |
+| 智能（默认） | 只有已知需要翻墙的域名走代理，其余直连 | 省代理流量 |
+| 全局 | 只有浙大和国内域名直连，其余全走代理 | 不会有「某个站忘了加名单」的情况 |
+
+> 不在校园网内（放假回家）时，把场景切回「校外 / 家里」，用公共 DNS 的配置。
 
 ---
 
@@ -101,6 +154,7 @@ git push origin master
 index.html               转换界面（含规则设置面板）
 configs/
   clash-base.yaml        Clash 基础配置：端口 / DNS / 嗅探（可改）
+  clash-base-campus.yaml ★ 校园网模式：浙大域名走校内 DNS 10.10.0.21
   README.md              怎么改规则的完整教程
 Clash/
   *.list                 分流规则文件
@@ -117,6 +171,8 @@ lib/
     links.mjs            节点 → 分享链接（base64 订阅输出）
   handler.mjs            /sub 统一处理逻辑（本地与 Vercel 共用）
   catalog.mjs            规则清单
+  pac.mjs                PAC 文件生成（不开系统代理的方案）
+  base-presets.mjs       可选的基础配置清单
   rule-urls.mjs          规则源地址改写
 api/
   sub.mjs                Vercel 转换接口
@@ -128,9 +184,10 @@ scripts/
   vercel-build.mjs       Vercel 构建脚本
 tools/
   test-parsers.mjs       解析器测试（21 项）
+  test-pac.mjs           ★ PAC 测试：真的把 PAC 跑起来验证分流判断（36 项）
   test-engine.mjs        引擎端到端测试（27 项）
-  test-journey.mjs       用户旅程测试（36 项）
-  test-mihomo.mjs        ★ 用真 mihomo 内核校验生成的配置（9 项）
+  test-journey.mjs       用户旅程测试（60 项）
+  test-mihomo.mjs        ★ 用真 mihomo 内核校验生成的配置（11 项）
   test-vercel-sim.mjs    Vercel 部署等价性测试（15 项）
   probe-rule-types.mjs   探测内核支持哪些规则类型
   validate-config.mjs    生成的 Clash 配置结构校验
@@ -153,6 +210,10 @@ DEPLOY.md                部署指南
 ZJU Rule 已正确配置，取消绕过后才能实现内网穿透等高级功能。
 以 Clash for Windows 为例：Settings → Bypass Domain/IPNet，删掉以 `10` 开头的行。
 
+**你只需要认识一个策略组**：`🚀 节点选择`。在 Clash Verge 的「代理」页面点它，
+选一个节点就完事了。其余策略组（`♻️ 自动选择`、`🇭🇰 香港节点`、`📹 油管视频`…）
+都是给规则自动调用的，**不需要你手动去选**。
+
 **配置分流方式**：Clash 采用继承式分流配置。例如把「巴哈姆特」选为台湾节点，
 它就会使用「台湾节点」分组里当前选中的节点。可以按需调整，
 比如把哔哩哔哩设为香港/台湾节点以访问港澳台资源。
@@ -166,8 +227,9 @@ ZJU Rule 已正确配置，取消绕过后才能实现内网穿透等高级功�
 ## 开发
 
 ```bash
-npm test              # 全部 108 项测试
+npm test              # 全部 170 项测试
 npm run test:parsers  # 只测解析器（离线，不需要服务）
+npm run test:pac      # PAC 分流判断（把生成的 PAC 真的执行一遍）
 npm run test:engine   # 引擎端到端（需要 npm start 先跑起来）
 npm run test:journey  # 模拟同学从开网页到拿到订阅链接的完整流程
 npm run test:mihomo   # 用真的 mihomo 内核校验生成的配置（最关键的一关）

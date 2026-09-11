@@ -134,6 +134,27 @@ node local/server.mjs --no-subconverter
 
 ---
 
+## 五点五、校园网场景
+
+部署之后同学们大概率是在校园网里用，记得告诉他们选「**校园网内**」场景。
+链接里会带 `&base=/configs/clash-base-campus.yaml`，效果是：
+
+- 浙大域名（`zju.edu.cn` / `cc98.org` / `zjusec.com`）强制用校内 DNS `10.10.0.21` 解析
+- 用 `redir-host` 而不是 `fake-ip`
+- 不配置 `fallback`，避免内网域名被公共 DNS 顶掉
+
+另外站点还会输出两个 PAC 文件，供「不开系统代理」的用法使用：
+
+| 路径 | 说明 |
+| --- | --- |
+| `/proxy.pac` | 智能模式：名单内的境外域名走代理，其余直连 |
+| `/proxy-global.pac` | 全局模式：只有浙大和国内域名直连 |
+
+PAC 里的代理地址默认是 `127.0.0.1:7890`（本地 Clash）。如果同学们的客户端端口不同，
+本地服务支持用 `?proxy=127.0.0.1:7897` 覆盖。
+
+---
+
 ## 六、常见问题
 
 **Q：点「预览配置」超时 / 504？**
@@ -181,10 +202,12 @@ npm run probe-rules    # 查看当前内核到底支持哪些规则类型
 
 **Q：怎么确认部署没问题？**
 ```bash
-npm test    # 108 项测试
+npm test    # 170 项测试
 ```
 其中：
 - `tools/test-vercel-sim.mjs` 用一个纯静态服务器模拟 Vercel 环境
   （没有文件系统、没有外部后端），验证「只部署到 Vercel 就能用」；
 - `tools/test-mihomo.mjs` 用真的 mihomo 内核加载生成的配置，
-  并反向验证「故意插入非法规则时测试确实能抓到」。
+  并反向验证「故意插入非法规则时测试确实能抓到」；
+- `tools/test-pac.mjs` 把生成的 PAC 用 Node 的 vm 真的执行一遍，
+  逐个域名验证「该走代理的走代理、该直连的直连」。

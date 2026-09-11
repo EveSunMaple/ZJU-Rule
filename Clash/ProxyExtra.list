@@ -1,0 +1,50 @@
+# 补充的分流规则：gfwlist 之后才出现、或逐渐被墙的域名
+#
+# 为什么需要这个文件：
+#   ProxyGFWlist.list 源自 gfwlist，那个列表已经很久没大更新了。
+#   一些后来才出现、或者在它停更之后才被墙的域名不在里面，
+#   结果就是「开着代理这个站还是打不开」——因为规则压根没把它算作需要代理。
+#
+# 维护约定：
+#   1. 只放「确定需要走代理」的域名，宁缺毋滥；
+#   2. 每条都写清楚是什么服务，方便以后核对；
+#   3. 拿不准的别加，可以先用网页上的「自定义规则」验证，确认有效再补到这里。
+
+# ---- X / Twitter -----------------------------------------------------------
+# gfwlist 里只有 DOMAIN-KEYWORD,twitter，覆盖不了 2023 年改名后的新域名
+DOMAIN-SUFFIX,x.com
+DOMAIN-SUFFIX,t.co
+
+# ---- OpenAI / ChatGPT ------------------------------------------------------
+DOMAIN-SUFFIX,openai.com
+DOMAIN-SUFFIX,chatgpt.com
+DOMAIN-SUFFIX,oaistatic.com
+DOMAIN-SUFFIX,oaiusercontent.com
+DOMAIN-SUFFIX,sora.com
+
+# ---- Anthropic / Claude ----------------------------------------------------
+DOMAIN-SUFFIX,anthropic.com
+DOMAIN-SUFFIX,claude.ai
+DOMAIN-SUFFIX,claude.com
+
+# ---- Meta 的 Threads -------------------------------------------------------
+DOMAIN-SUFFIX,threads.net
+DOMAIN-SUFFIX,threads.com
+
+# ---- 其它常见的境外 AI 服务 ------------------------------------------------
+DOMAIN-SUFFIX,perplexity.ai
+DOMAIN-SUFFIX,midjourney.com
+DOMAIN-SUFFIX,civitai.com
+DOMAIN-SUFFIX,groq.com
+DOMAIN-SUFFIX,mistral.ai
+DOMAIN-SUFFIX,cursor.com
+DOMAIN-SUFFIX,cursor.sh
+
+# ---- 开发相关（国内可访问但很慢，走代理更顺）--------------------------------
+DOMAIN-SUFFIX,docker.io
+DOMAIN-SUFFIX,ghcr.io
+DOMAIN-SUFFIX,gcr.io
+DOMAIN-SUFFIX,npmjs.com
+DOMAIN-SUFFIX,pypi.org
+DOMAIN-SUFFIX,rust-lang.org
+DOMAIN-SUFFIX,golang.org

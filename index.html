@@ -4,115 +4,97 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>ZJU Rule · 订阅转换</title>
-<meta name="description" content="浙江大学 ZJU Rule 分流规则订阅转换服务，可自定义分流规则">
+<meta name="description" content="浙江大学 ZJU Rule 分流规则订阅转换，校园网内开代理也能正常上内网">
 <style>
   :root {
-    --bg: #0f1720;
-    --panel: #17212b;
-    --panel-2: #1e2b38;
-    --panel-3: #24323f;
-    --border: #2a3a4a;
-    --text: #e6edf3;
-    --muted: #8ba0b3;
-    --accent: #4aa3ff;
-    --accent-2: #2b7fd4;
-    --ok: #3fb950;
-    --warn: #d29922;
-    --err: #f85149;
+    --bg: #0f1720; --panel: #17212b; --panel-2: #1e2b38; --panel-3: #24323f;
+    --border: #2a3a4a; --text: #e6edf3; --muted: #8ba0b3;
+    --accent: #4aa3ff; --accent-2: #2b7fd4;
+    --ok: #3fb950; --warn: #d29922; --err: #f85149;
     --radius: 10px;
   }
   * { box-sizing: border-box; }
   html, body { margin: 0; padding: 0; }
   body {
-    background: var(--bg);
-    color: var(--text);
+    background: var(--bg); color: var(--text);
     font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
       "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
     padding: 0 16px 64px;
   }
   .wrap { max-width: 880px; margin: 0 auto; }
 
-  header { padding: 40px 0 24px; }
+  header { padding: 40px 0 20px; }
   h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: .2px; }
-  h1 .tag {
-    font-size: 12px; font-weight: 600; vertical-align: middle;
-    background: var(--accent-2); color: #fff; border-radius: 999px;
-    padding: 3px 10px; margin-left: 10px;
-  }
+  h1 .tag { font-size: 12px; font-weight: 600; vertical-align: middle; background: var(--accent-2);
+    color: #fff; border-radius: 999px; padding: 3px 10px; margin-left: 10px; }
   header p { margin: 0; color: var(--muted); font-size: 14px; }
   header a { color: var(--accent); text-decoration: none; }
   header a:hover { text-decoration: underline; }
 
-  .card {
-    background: var(--panel);
-    border: 1px solid var(--border);
-    border-radius: var(--radius);
-    padding: 20px;
-    margin-bottom: 16px;
-  }
-  .card > h2 {
-    margin: 0 0 14px; font-size: 14px; font-weight: 600;
-    color: var(--muted); text-transform: uppercase; letter-spacing: .08em;
-    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
-  }
-  .badge {
-    font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: none;
-    background: rgba(74,163,255,.16); color: var(--accent);
-    border: 1px solid rgba(74,163,255,.35);
-    border-radius: 999px; padding: 2px 9px;
-  }
+  .card { background: var(--panel); border: 1px solid var(--border);
+    border-radius: var(--radius); padding: 20px; margin-bottom: 16px; }
+  .card > h2 { margin: 0 0 14px; font-size: 14px; font-weight: 600; color: var(--muted);
+    text-transform: uppercase; letter-spacing: .08em; display: flex; align-items: center;
+    gap: 10px; flex-wrap: wrap; }
+  .badge { font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: none;
+    background: rgba(74,163,255,.16); color: var(--accent); border: 1px solid rgba(74,163,255,.35);
+    border-radius: 999px; padding: 2px 9px; }
 
   label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
   textarea, input[type="text"], select {
-    width: 100%; padding: 10px 12px;
-    background: var(--panel-2); color: var(--text);
-    border: 1px solid var(--border); border-radius: 8px;
-    font-size: 14px; font-family: inherit;
-    transition: border-color .15s;
+    width: 100%; padding: 10px 12px; background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px; font-size: 14px;
+    font-family: inherit; transition: border-color .15s;
   }
-  textarea { min-height: 92px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  textarea { min-height: 84px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
   textarea:focus, input:focus, select:focus { outline: none; border-color: var(--accent); }
   .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
   .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
-  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
-
+  .grid3 { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 14px; }
+  @media (max-width: 700px) { .grid, .grid3 { grid-template-columns: 1fr; } }
   .field { margin-bottom: 16px; }
   .field:last-child { margin-bottom: 0; }
+
+  /* --- 使用场景选择 --- */
+  .scenes { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
+  @media (max-width: 640px) { .scenes { grid-template-columns: 1fr; } }
+  .scene {
+    border: 1px solid var(--border); background: var(--panel-2); border-radius: 10px;
+    padding: 14px; cursor: pointer; transition: border-color .15s, background .15s;
+    display: block; margin: 0;
+  }
+  .scene:hover { background: var(--panel-3); }
+  .scene input { display: none; }
+  .scene .t { font-size: 14px; font-weight: 600; color: var(--text); display: flex; align-items: center; gap: 8px; }
+  .scene .d { font-size: 12px; color: var(--muted); margin-top: 5px; line-height: 1.5; }
+  .scene.on { border-color: var(--accent); background: rgba(74,163,255,.10); }
+  .scene .dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--border); flex: 0 0 auto; }
+  .scene.on .dot { border-color: var(--accent); background: var(--accent); box-shadow: inset 0 0 0 2px var(--panel); }
 
   .checks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px; }
   .check { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text); cursor: pointer; }
   .check input { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
 
-  button {
-    font: inherit; font-size: 14px; font-weight: 600;
-    padding: 11px 20px; border-radius: 8px; border: 1px solid transparent;
-    background: var(--accent); color: #fff; cursor: pointer;
-    transition: background .15s;
-  }
+  button { font: inherit; font-size: 14px; font-weight: 600; padding: 11px 20px;
+    border-radius: 8px; border: 1px solid transparent; background: var(--accent); color: #fff;
+    cursor: pointer; transition: background .15s; }
   button:hover:not(:disabled) { background: var(--accent-2); }
   button:disabled { opacity: .5; cursor: not-allowed; }
   button.ghost { background: transparent; border-color: var(--border); color: var(--text); font-weight: 500; }
   button.ghost:hover:not(:disabled) { background: var(--panel-2); }
   button.small { padding: 7px 13px; font-size: 13px; }
-
   .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
-  /* --- 规则设置 --- */
-  .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
-  .presets button {
-    background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
-    font-weight: 500; font-size: 13px; padding: 8px 14px;
-  }
+  .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+  .presets button { background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    font-weight: 500; font-size: 13px; padding: 8px 14px; }
   .presets button:hover { background: var(--panel-3); }
   .presets button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
   .rsgroup { border-top: 1px solid var(--border); padding: 12px 0; }
   .rsgroup:first-child { border-top: none; }
-  .rsgroup > .rsgroup-title {
-    font-size: 13px; font-weight: 600; margin-bottom: 8px;
-    display: flex; align-items: center; gap: 8px;
-  }
+  .rsgroup-title { font-size: 13px; font-weight: 600; margin-bottom: 8px; }
   .rsitems { display: flex; flex-wrap: wrap; gap: 6px 16px; }
   .rsitem { display: flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer; color: var(--text); }
   .rsitem input { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
@@ -120,30 +102,21 @@
 
   .crow { display: grid; grid-template-columns: 1fr 150px 34px; gap: 8px; margin-bottom: 8px; align-items: center; }
   @media (max-width: 640px) { .crow { grid-template-columns: 1fr; } }
-  .crow button {
-    background: transparent; border: 1px solid var(--border); color: var(--muted);
-    padding: 0; height: 38px; font-size: 16px; line-height: 1; font-weight: 400;
-  }
+  .crow button { background: transparent; border: 1px solid var(--border); color: var(--muted);
+    padding: 0; height: 38px; font-size: 16px; line-height: 1; font-weight: 400; }
   .crow button:hover { background: rgba(248,81,73,.14); color: var(--err); border-color: rgba(248,81,73,.4); }
   .empty { color: var(--muted); font-size: 13px; padding: 6px 0; }
 
   .result { display: none; }
   .result.show { display: block; }
-  .out {
-    width: 100%; padding: 12px; background: var(--panel-2);
-    border: 1px solid var(--border); border-radius: 8px;
-    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
-    font-size: 12.5px; word-break: break-all; color: #9fd3ff;
-    max-height: 150px; overflow: auto; white-space: pre-wrap;
-  }
+  .out { width: 100%; padding: 12px; background: var(--panel-2); border: 1px solid var(--border);
+    border-radius: 8px; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 12.5px;
+    word-break: break-all; color: #9fd3ff; max-height: 140px; overflow: auto; white-space: pre-wrap; }
   .meta { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
   .meta b { color: var(--text); font-weight: 600; }
 
-  .banner {
-    border-radius: 8px; padding: 12px 14px; font-size: 13px;
-    margin-bottom: 16px; border: 1px solid; display: none;
-    white-space: pre-wrap;
-  }
+  .banner { border-radius: 8px; padding: 12px 14px; font-size: 13px; margin-bottom: 16px;
+    border: 1px solid; display: none; white-space: pre-wrap; }
   .banner.show { display: block; }
   .banner.err { background: rgba(248,81,73,.1); border-color: rgba(248,81,73,.4); color: #ffb4ae; }
   .banner.ok  { background: rgba(63,185,80,.1); border-color: rgba(63,185,80,.4); color: #8ee79b; }
@@ -153,16 +126,34 @@
   details summary:hover { color: var(--text); }
   details[open] > summary { margin-bottom: 14px; }
 
-  pre.preview {
-    background: #0b1219; border: 1px solid var(--border); border-radius: 8px;
-    padding: 12px; font-size: 12px; max-height: 340px; overflow: auto;
-    white-space: pre; margin: 0;
-  }
-  .qr { margin-top: 12px; display: flex; justify-content: center; background: #fff; padding: 10px; border-radius: 8px; width: fit-content; }
+  /* --- 使用说明 --- */
+  .howto { margin-top: 18px; border-top: 1px solid var(--border); padding-top: 16px; }
+  .howto h3 { margin: 0 0 4px; font-size: 14px; }
+  .howto .sub { font-size: 12.5px; color: var(--muted); margin-bottom: 12px; }
+  .steps { margin: 0; padding-left: 20px; font-size: 13.5px; }
+  .steps li { margin-bottom: 8px; line-height: 1.6; }
+  .steps li b { color: var(--text); }
+  .pick { display: flex; gap: 8px; margin-bottom: 14px; flex-wrap: wrap; }
+  .pick button { background: var(--panel-2); border: 1px solid var(--border); color: var(--text);
+    font-weight: 500; font-size: 13px; padding: 8px 14px; }
+  .pick button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
+  .method { display: none; }
+  .method.on { display: block; }
+  .why { background: var(--panel-2); border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px 14px; font-size: 12.5px; color: var(--muted); margin-top: 14px; line-height: 1.7; }
+  .why b { color: var(--text); }
+  .pacbox { display: flex; gap: 8px; align-items: center; margin: 8px 0; flex-wrap: wrap; }
+  .pacbox input { flex: 1; min-width: 260px; font-family: ui-monospace, Menlo, monospace; font-size: 12.5px; }
+
+  pre.preview { background: #0b1219; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; font-size: 12px; max-height: 340px; overflow: auto; white-space: pre; margin: 0; }
+  .qr { margin-top: 12px; display: flex; justify-content: center; background: #fff;
+    padding: 10px; border-radius: 8px; width: fit-content; }
   .qr img, .qr canvas { display: block; }
   footer { color: var(--muted); font-size: 12.5px; text-align: center; padding: 24px 0; }
   footer a { color: var(--accent); }
-  code.k { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: ui-monospace, Menlo, monospace; }
+  code.k { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px;
+    font-family: ui-monospace, Menlo, monospace; }
 </style>
 </head>
 <body>
@@ -170,27 +161,44 @@
 
   <header>
     <h1>ZJU Rule<span class="tag">订阅转换</span></h1>
-    <p>
-      浙江大学分流规则 · 把机场订阅链接转换成带 ZJU 规则的 Clash 订阅 ·
-      <a href="https://github.com/lizhist/ZJU-Rule" target="_blank" rel="noopener">GitHub</a>
-    </p>
+    <p>浙大分流规则 · 让你开着代理也能正常上校内网站 ·
+      <a href="https://github.com/lizhist/ZJU-Rule" target="_blank" rel="noopener">GitHub</a></p>
   </header>
 
   <div id="banner-err" class="banner err"></div>
   <div id="banner-ok" class="banner ok"></div>
   <div id="banner-warn" class="banner warn"></div>
 
+  <!-- 1. 使用场景 -->
   <div class="card">
-    <h2>1 · 订阅链接</h2>
-    <div class="field">
-      <label for="sub">机场订阅链接（支持多个，用 <code class="k">|</code> 分隔）</label>
-      <textarea id="sub" spellcheck="false" placeholder="https://example.com/api/v1/client/subscribe?token=xxxxxx"></textarea>
-      <div class="hint">支持 SS / SSR / V2Ray / VLESS / Trojan / Hysteria2 / TUIC 等订阅，base64 订阅、Clash 配置、明文链接列表都能解析。</div>
+    <h2>1 · 你在哪里用？ <span class="badge">先选这个</span></h2>
+    <div class="scenes" id="scenes">
+      <label class="scene" data-scene="campus">
+        <input type="radio" name="scene" value="campus">
+        <span class="t"><span class="dot"></span>校园网内</span>
+        <span class="d">宿舍 / 实验室 / ZJUWLAN。<b>浙大域名改用校内 DNS（10.10.0.21）解析</b>，
+          所以开着系统代理也能正常登录校内网站。</span>
+      </label>
+      <label class="scene" data-scene="default">
+        <input type="radio" name="scene" value="default">
+        <span class="t"><span class="dot"></span>校外 / 家里</span>
+        <span class="d">用公共 DNS（阿里 DoH）解析。不在校园网内时选这个。</span>
+      </label>
     </div>
   </div>
 
+  <!-- 2. 订阅 -->
   <div class="card">
-    <h2>2 · 转换选项</h2>
+    <h2>2 · 机场订阅链接</h2>
+    <div class="field">
+      <textarea id="sub" spellcheck="false" placeholder="https://example.com/api/v1/client/subscribe?token=xxxxxx"></textarea>
+      <div class="hint">支持多个，用 <code class="k">|</code> 分隔。SS / SSR / VMess / VLESS / Trojan / Hysteria2 / TUIC 都能解析。</div>
+    </div>
+  </div>
+
+  <!-- 3. 选项 -->
+  <div class="card">
+    <h2>3 · 客户端与规则</h2>
     <div class="grid">
       <div class="field">
         <label for="target">客户端</label>
@@ -215,7 +223,6 @@
           <label class="check"><input type="checkbox" id="sort"> 节点排序</label>
         </div>
       </div>
-
       <div class="grid">
         <div class="field">
           <label for="exclude">排除节点（正则）</label>
@@ -226,7 +233,6 @@
           <input type="text" id="include" placeholder="留空表示全部">
         </div>
       </div>
-
       <div class="field">
         <label for="backend">自定义转换后端（一般不用填）</label>
         <input type="text" id="backend" spellcheck="false" placeholder="留空即可">
@@ -235,17 +241,16 @@
     </details>
   </div>
 
-  <!-- ============ 规则设置 ============ -->
+  <!-- 4. 规则设置 -->
   <div class="card">
-    <h2>3 · 规则设置 <span class="badge">同学改这里</span></h2>
-
+    <h2>4 · 规则设置 <span class="badge">同学改这里</span></h2>
     <div class="presets" id="presets">
       <button data-preset="full" class="active">全功能</button>
       <button data-preset="noad">关闭广告拦截</button>
       <button data-preset="minimal">极简</button>
     </div>
-    <div class="hint" style="margin-top:-8px;margin-bottom:16px">
-      预设只是帮你快速勾选，下面还可以逐项调整。所有选择都会写进生成的订阅链接里。
+    <div class="hint" style="margin-top:-6px;margin-bottom:16px">
+      预设只是帮你快速勾选，下面还能逐项调。所有选择都会写进生成的订阅链接，可以直接分享。
     </div>
 
     <details open>
@@ -258,17 +263,16 @@
       <div id="custom-list"></div>
       <button class="ghost small" id="add-custom" style="margin-top:6px">+ 添加一条规则</button>
       <div class="hint">
-        直接填域名即可（自动按 <code class="k">DOMAIN-SUFFIX</code> 处理，例如
-        <code class="k">my-lab.zju.edu.cn</code>）；
-        也可以填完整规则，例如 <code class="k">IP-CIDR,10.20.0.0/16</code> 或
-        <code class="k">DOMAIN-KEYWORD,steam</code>。
-        自定义规则优先级最高，会排在所有内置规则前面。
+        直接填域名即可（自动按 <code class="k">DOMAIN-SUFFIX</code> 处理）；
+        也可以填完整规则，如 <code class="k">IP-CIDR,10.20.0.0/16</code>。
+        自定义规则优先级最高，排在所有内置规则前面。
       </div>
     </details>
   </div>
 
+  <!-- 5. 生成 -->
   <div class="card">
-    <h2>4 · 生成</h2>
+    <h2>5 · 生成</h2>
     <div class="row">
       <button id="go">生成订阅链接</button>
       <button id="preview" class="ghost">预览配置</button>
@@ -276,8 +280,9 @@
     </div>
   </div>
 
+  <!-- 结果 -->
   <div class="card result" id="result">
-    <h2>订阅链接</h2>
+    <h2>你的订阅链接</h2>
     <div class="out" id="out"></div>
     <div class="meta" id="meta"></div>
     <div class="row" style="margin-top:14px">
@@ -287,6 +292,63 @@
     </div>
     <div class="qr" id="qrbox" style="display:none"></div>
     <div class="hint" id="device-hint" style="margin-top:14px"></div>
+
+    <!-- 使用说明 -->
+    <div class="howto">
+      <h3>接下来怎么用？</h3>
+      <div class="sub">两种方式选一种。方式一更省事，方式二不影响系统其它软件。</div>
+
+      <div class="pick" id="method-pick">
+        <button data-method="system" class="active">方式一：开系统代理</button>
+        <button data-method="pac">方式二：不开系统代理（PAC）</button>
+      </div>
+
+      <div class="method on" id="method-system">
+        <ol class="steps">
+          <li><b>把上面的链接加进 Clash Verge</b>：左侧「订阅」→ 新建 → 粘贴链接 → 导入。</li>
+          <li><b>选一个节点</b>：左侧「代理」→ 找到 <code class="k">🚀 节点选择</code> → 点任意一个节点。</li>
+          <li><b>打开「系统代理」开关</b>（右上角）。</li>
+        </ol>
+        <div class="why">
+          就这样，不用再管别的了。<br>
+          另外那些策略组（<code class="k">♻️ 自动选择</code>、<code class="k">🇭🇰 香港节点</code>、
+          <code class="k">📹 油管视频</code> …）都是给规则自动调用的，<b>你不需要手动去选</b>。
+          <br><br>
+          <b>为什么以前开了代理就上不了内网？</b><br>
+          因为 Clash 默认用公共 DNS 解析域名，而 <code class="k">zju.edu.cn</code>、
+          <code class="k">cc98.org</code> 这类域名只有校内 DNS 才解析得出正确地址。
+          选了「校园网内」之后，配置会给这些域名强制指定校内 DNS（10.10.0.21），问题就没了。
+        </div>
+      </div>
+
+      <div class="method" id="method-pac">
+        <ol class="steps">
+          <li><b>Clash Verge 保持运行</b>，但<b>不要</b>打开「系统代理」开关 ——
+            它只是提供 <code class="k">127.0.0.1:7890</code> 这个本地端口。</li>
+          <li><b>把下面这个地址填进系统的「自动代理配置」</b>：</li>
+        </ol>
+        <div class="pacbox">
+          <input type="text" id="pac-url" readonly>
+          <button class="ghost small" id="copy-pac">复制</button>
+          <button class="ghost small" id="open-pac">打开</button>
+        </div>
+        <div class="row" style="margin:6px 0 12px">
+          <button class="ghost small" id="pac-smart">智能模式（省流量，推荐）</button>
+          <button class="ghost small" id="pac-global">全局模式（更省心）</button>
+        </div>
+        <ol class="steps" start="3">
+          <li><b>macOS</b>：系统设置 → 网络 → 当前网络「详细信息」→ 代理 → 勾选「自动代理配置」→
+            填上面的地址。<br>
+            <b>Windows</b>：设置 → 网络和 Internet → 代理 → 「使用自动配置脚本」→ 填地址。</li>
+        </ol>
+        <div class="why">
+          这样做的好处：直连的请求<b>根本不经过 Clash</b>，DNS 用系统（也就是校园网）的，
+          所以校内网站天然正常；同时其它软件（浙大客户端、VPN、终端）完全不受影响。<br><br>
+          <b>智能模式</b>：只有已知需要翻墙的域名走代理，其余直连 —— 省代理流量。<br>
+          <b>全局模式</b>：只有浙大和国内域名直连，其余全走代理 —— 不会出现「某个站忘了加名单」的情况。
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="card" id="preview-card" style="display:none">
@@ -312,39 +374,27 @@
     ['v2ray',  'V2Ray / v2rayN'],
     ['ss',     'Shadowsocks'],
   ];
-
   const EXTERNAL_TARGETS = [
-    ['surge',     'Surge 4+'],
-    ['surfboard', 'Surfboard'],
-    ['quanx',     'Quantumult X'],
-    ['loon',      'Loon'],
-    ['mellow',    'Mellow'],
-    ['singbox',   'sing-box'],
-    ['sssub',     'Shadowsocks Android'],
+    ['surge', 'Surge 4+'], ['surfboard', 'Surfboard'], ['quanx', 'Quantumult X'],
+    ['loon', 'Loon'], ['mellow', 'Mellow'], ['singbox', 'sing-box'], ['sssub', 'Shadowsocks Android'],
   ];
 
   const $ = (id) => document.getElementById(id);
-  const STORE_KEY = 'zju-rule-options-v2';
+  const STORE_KEY = 'zju-rule-options-v3';
 
-  let state = {
-    origin: location.origin,
-    engineAvailable: true,
-    subconverterAvailable: false,
-    profiles: [],
-  };
-
-  let catalog = null;          // 规则集清单
-  let disabledSets = new Set(); // 被关掉的规则集 source
-  let customRules = [];         // [{rule, policy}]
+  let state = { origin: location.origin, subconverterAvailable: false, profiles: [] };
+  let catalog = null;
+  let disabledSets = new Set();
+  let customRules = [];
+  let scene = 'campus';
+  let pacMode = 'smart';
 
   /* ==================== 初始化 ==================== */
 
   function fillTargets() {
     const list = [...BUILTIN_TARGETS];
     if (state.subconverterAvailable) list.push(...EXTERNAL_TARGETS);
-    $('target').innerHTML = list
-      .map(([v, label]) => `<option value="${v}">${label}</option>`)
-      .join('');
+    $('target').innerHTML = list.map(([v, l]) => `<option value="${v}">${l}</option>`).join('');
   }
 
   function fillProfiles() {
@@ -354,8 +404,20 @@
       return;
     }
     select.innerHTML = state.profiles
-      .map((p) => `<option value="${p.path}">${p.name}${p.zju ? '  ★ ZJU 推荐' : ''}</option>`)
-      .join('');
+      .map((p) => `<option value="${p.path}">${p.name}${p.zju ? '  ★ ZJU 推荐' : ''}</option>`).join('');
+  }
+
+  function basePath() {
+    const found = (catalog?.bases || []).find((b) => b.id === scene);
+    return found ? found.path : (scene === 'campus' ? '/configs/clash-base-campus.yaml' : '/configs/clash-base.yaml');
+  }
+
+  function renderScenes() {
+    for (const el of $('scenes').querySelectorAll('.scene')) {
+      const on = el.dataset.scene === scene;
+      el.classList.toggle('on', on);
+      el.querySelector('input').checked = on;
+    }
   }
 
   function loadOptions() {
@@ -374,70 +436,57 @@
     if (saved.include) $('include').value = saved.include;
     if (saved.backend) $('backend').value = saved.backend;
     if (saved.sub) $('sub').value = saved.sub;
+    if (typeof saved.scene === 'string') scene = saved.scene;
+    if (typeof saved.pacMode === 'string') pacMode = saved.pacMode;
     if (Array.isArray(saved.customRules)) customRules = saved.customRules;
     if (Array.isArray(saved.disabledSets)) disabledSets = new Set(saved.disabledSets);
-    if (saved.preset) setActivePreset(saved.preset, false);
+    if (saved.preset) setActivePreset(saved.preset);
   }
 
   function saveOptions() {
     const data = {
-      target: $('target').value,
-      config: $('config').value,
-      exclude: $('exclude').value,
-      include: $('include').value,
-      backend: $('backend').value,
-      sub: $('sub').value,
+      target: $('target').value, config: $('config').value,
+      exclude: $('exclude').value, include: $('include').value,
+      backend: $('backend').value, sub: $('sub').value,
+      scene, pacMode,
       customRules: customRules.filter((r) => r.rule && r.rule.trim()),
       disabledSets: [...disabledSets],
       preset: document.querySelector('#presets button.active')?.dataset.preset || 'custom',
     };
-    for (const key of ['udp', 'tfo', 'scv', 'emoji', 'append_type', 'sort']) {
-      data[key] = $(key).checked;
-    }
+    for (const key of ['udp', 'tfo', 'scv', 'emoji', 'append_type', 'sort']) data[key] = $(key).checked;
     try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
   }
 
   async function discoverConfig() {
     let data = window.__ZJU_CONFIG__;
     if (!data) {
-      try {
-        const res = await fetch('/api/config', { cache: 'no-store' });
-        if (res.ok) data = await res.json();
-      } catch (e) { /* ignore */ }
+      try { const r = await fetch('/api/config', { cache: 'no-store' }); if (r.ok) data = await r.json(); } catch (e) {}
     }
     if (data) state = Object.assign({}, state, data);
-
-    // 不注入 origin：始终以浏览器实际访问的地址为准
     state.origin = location.origin;
 
     fillTargets();
     fillProfiles();
     loadOptions();
+    renderScenes();
 
-    if (state.subconverterAvailable) {
-      $('backend-hint').textContent =
-        '本站内置转换引擎，无需后端。Surge / Quantumult X 等格式会自动转发给已配置的 subconverter。';
-    } else {
-      $('backend-hint').textContent =
-        '本站内置转换引擎，直接就能用，不需要填任何地址。仅当你自建了 subconverter 并想用它转换特殊格式时才需要填。';
-    }
+    $('backend-hint').textContent = state.subconverterAvailable
+      ? '本站内置转换引擎，无需后端。Surge / Quantumult X 等格式会自动转发给已配置的 subconverter。'
+      : '本站内置转换引擎，直接可用。只有你自建了 subconverter 想转换特殊格式时才需要填。';
   }
 
-  /* ==================== 规则集清单 ==================== */
+  /* ==================== 规则集 ==================== */
 
   async function loadCatalog() {
     const box = $('rulesets');
     try {
-      const res = await fetch(`/api/rules?config=${encodeURIComponent($('config').value)}`, {
-        cache: 'no-store',
-      });
-      if (!res.ok) throw new Error(`HTTP ${res.status}`);
-      catalog = await res.json();
+      const r = await fetch(`/api/rules?config=${encodeURIComponent($('config').value)}`, { cache: 'no-store' });
+      if (!r.ok) throw new Error(`HTTP ${r.status}`);
+      catalog = await r.json();
       if (!catalog.ok) throw new Error(catalog.error || '规则清单加载失败');
     } catch (err) {
-      box.innerHTML =
-        `<div class="empty">规则清单加载失败：${err.message}<br>` +
-        `（可以直接生成订阅，只是这里没法逐项开关规则集）</div>`;
+      box.innerHTML = `<div class="empty">规则清单加载失败：${err.message}<br>（仍可正常生成订阅，只是这里没法逐项开关）</div>`;
+      updateCounts();
       return;
     }
     renderRuleSets();
@@ -445,26 +494,20 @@
 
   function renderRuleSets() {
     if (!catalog) return;
-
-    // 按策略组归类
     const byPolicy = new Map();
     for (const rs of catalog.ruleSets) {
-      if (rs.inline) continue; // []GEOIP,CN / []FINAL 这种是固定的兜底规则，不开关
+      if (rs.inline) continue;
       if (!byPolicy.has(rs.policy)) byPolicy.set(rs.policy, []);
       byPolicy.get(rs.policy).push(rs);
     }
 
     const html = [];
     for (const [policy, sets] of byPolicy) {
-      html.push(`<div class="rsgroup"><div class="rsgroup-title">${escapeHtml(policy)}</div><div class="rsitems">`);
+      html.push(`<div class="rsgroup"><div class="rsgroup-title">${esc(policy)}</div><div class="rsitems">`);
       for (const rs of sets) {
-        const checked = disabledSets.has(rs.source) ? '' : 'checked';
-        html.push(
-          `<label class="rsitem" title="${escapeHtml(rs.source)}">` +
-            `<input type="checkbox" data-source="${escapeHtml(rs.source)}" ${checked}>` +
-            `${escapeHtml(rs.name)}${rs.heavy ? ' <span class="heavy">体积大</span>' : ''}` +
-          `</label>`,
-        );
+        html.push(`<label class="rsitem" title="${esc(rs.source)}">` +
+          `<input type="checkbox" data-source="${esc(rs.source)}" ${disabledSets.has(rs.source) ? '' : 'checked'}>` +
+          `${esc(rs.name)}${rs.heavy ? ' <span class="heavy">体积大</span>' : ''}</label>`);
       }
       html.push('</div></div>');
     }
@@ -473,22 +516,20 @@
     $('rulesets').addEventListener('change', (e) => {
       const input = e.target;
       if (!(input instanceof HTMLInputElement)) return;
-      const source = input.dataset.source;
-      if (input.checked) disabledSets.delete(source);
-      else disabledSets.add(source);
+      if (input.checked) disabledSets.delete(input.dataset.source);
+      else disabledSets.add(input.dataset.source);
       markPresetCustom();
       updateCounts();
       saveOptions();
     });
-
     updateCounts();
   }
 
   function updateCounts() {
     if (catalog) {
-      const toggleable = catalog.ruleSets.filter((r) => !r.inline);
-      const enabled = toggleable.filter((r) => !disabledSets.has(r.source)).length;
-      $('rs-count').textContent = `（${enabled} / ${toggleable.length} 已启用）`;
+      const all = catalog.ruleSets.filter((r) => !r.inline);
+      const on = all.filter((r) => !disabledSets.has(r.source)).length;
+      $('rs-count').textContent = `（${on} / ${all.length} 已启用）`;
     }
     const n = customRules.filter((r) => r.rule && r.rule.trim()).length;
     $('custom-count').textContent = n ? `（${n} 条）` : '（暂无）';
@@ -498,120 +539,82 @@
 
   const PRESETS = {
     full: () => new Set(),
-    noad: () =>
-      new Set(
-        (catalog?.ruleSets || [])
-          .filter((r) => r.heavy || /Ban(AD|ProgramAD|EasyList|EasyListChina|EasyPrivacy)/i.test(r.path || ''))
-          .map((r) => r.source),
-      ),
-    minimal: () =>
-      new Set(
-        (catalog?.ruleSets || [])
-          .filter(
-            (r) =>
-              !r.inline &&
-              (r.heavy ||
-                /Ban(AD|ProgramAD|EasyList|EasyListChina|EasyPrivacy)/i.test(r.path || '') ||
-                /ProxyMedia|ProxyLite|ProxyGFWlist|ChinaIp|ChinaCompanyIp|NetEaseMusic|Epic|Sony|Steam|Baha|BilibiliHMT|Netflix|YouTube|OneDrive/i.test(
-                  r.path || '',
-                )),
-          )
-          .map((r) => r.source),
-      ),
+    noad: () => new Set((catalog?.ruleSets || [])
+      .filter((r) => r.heavy || /Ban(AD|ProgramAD|EasyList|EasyListChina|EasyPrivacy)/i.test(r.path || ''))
+      .map((r) => r.source)),
+    minimal: () => new Set((catalog?.ruleSets || [])
+      .filter((r) => !r.inline && (r.heavy ||
+        /Ban(AD|ProgramAD|EasyList|EasyListChina|EasyPrivacy)/i.test(r.path || '') ||
+        /ProxyMedia|ProxyGFWlist|ProxyExtra|ChinaIp|ChinaCompanyIp|NetEaseMusic|Epic|Sony|Steam|Baha|BilibiliHMT|Netflix|YouTube|OneDrive/i.test(r.path || '')))
+      .map((r) => r.source)),
   };
 
   function applyPreset(name) {
-    if (!catalog) {
-      showBanner('warn', '规则清单还没加载完，稍等一下再试。');
-      return;
-    }
+    if (!catalog) return showBanner('warn', '规则清单还没加载完，稍等一下再试。');
     disabledSets = PRESETS[name] ? PRESETS[name]() : new Set();
     renderRuleSets();
-    setActivePreset(name, true);
+    setActivePreset(name);
     saveOptions();
-    showBanner('ok', `已应用预设「${$('presets').querySelector('button.active').textContent}」，共启用 ${
-      catalog.ruleSets.filter((r) => !r.inline && !disabledSets.has(r.source)).length
-    } 个规则集。`);
+    showBanner('ok', '已应用预设，共启用 ' +
+      catalog.ruleSets.filter((r) => !r.inline && !disabledSets.has(r.source)).length + ' 个规则集。');
   }
 
-  function setActivePreset(name, rerender) {
-    for (const b of $('presets').querySelectorAll('button')) {
-      b.classList.toggle('active', b.dataset.preset === name);
-    }
-    if (rerender === false) return;
+  function setActivePreset(name) {
+    for (const b of $('presets').querySelectorAll('button')) b.classList.toggle('active', b.dataset.preset === name);
   }
-
   function markPresetCustom() {
     for (const b of $('presets').querySelectorAll('button')) b.classList.remove('active');
   }
-
-  for (const b of $('presets').querySelectorAll('button')) {
-    b.addEventListener('click', () => applyPreset(b.dataset.preset));
-  }
+  for (const b of $('presets').querySelectorAll('button')) b.addEventListener('click', () => applyPreset(b.dataset.preset));
 
   /* ==================== 自定义规则 ==================== */
 
   function policyOptions(selected) {
-    const policies = ['🚀 节点选择', 'DIRECT', 'REJECT'];
-    if (catalog?.groups) {
-      for (const g of catalog.groups) {
-        if (!policies.includes(g.name)) policies.push(g.name);
-      }
-    }
-    return policies
-      .map((p) => `<option value="${escapeHtml(p)}"${p === selected ? ' selected' : ''}>${escapeHtml(p)}</option>`)
-      .join('');
+    const list = ['🚀 节点选择', 'DIRECT', 'REJECT'];
+    for (const g of catalog?.groups || []) if (!list.includes(g.name)) list.push(g.name);
+    return list.map((p) => `<option value="${esc(p)}"${p === selected ? ' selected' : ''}>${esc(p)}</option>`).join('');
   }
 
   function renderCustomRules() {
-    const list = $('custom-list');
+    const box = $('custom-list');
     if (!customRules.length) {
-      list.innerHTML = '<div class="empty">还没有自定义规则。点下面的按钮添加，比如把某个校内域名改成走内网直连。</div>';
+      box.innerHTML = '<div class="empty">还没有自定义规则。比如可以把某个校内域名指定为走内网直连。</div>';
       return;
     }
+    box.innerHTML = customRules.map((r, i) =>
+      `<div class="crow">` +
+        `<input type="text" data-i="${i}" data-k="rule" value="${esc(r.rule || '')}" placeholder="example.com 或 IP-CIDR,10.0.0.0/8">` +
+        `<select data-i="${i}" data-k="policy">${policyOptions(r.policy)}</select>` +
+        `<button data-i="${i}" data-k="remove" title="删除">×</button>` +
+      `</div>`).join('');
 
-    list.innerHTML = customRules
-      .map(
-        (r, i) =>
-          `<div class="crow">` +
-            `<input type="text" data-i="${i}" data-k="rule" value="${escapeHtml(r.rule || '')}" placeholder="example.com 或 IP-CIDR,10.0.0.0/8">` +
-            `<select data-i="${i}" data-k="policy">${policyOptions(r.policy)}</select>` +
-            `<button data-i="${i}" data-k="remove" title="删除">×</button>` +
-          `</div>`,
-      )
-      .join('');
-
-    list.querySelectorAll('input, select').forEach((el) => {
+    box.querySelectorAll('input, select').forEach((el) => {
       el.addEventListener('input', onCustomEdit);
       el.addEventListener('change', onCustomEdit);
     });
-    list.querySelectorAll('button[data-k="remove"]').forEach((el) => {
+    box.querySelectorAll('button[data-k="remove"]').forEach((el) => {
       el.addEventListener('click', () => {
         customRules.splice(Number(el.dataset.i), 1);
-        renderCustomRules();
-        updateCounts();
-        saveOptions();
+        renderCustomRules(); updateCounts(); saveOptions();
       });
     });
   }
 
   function onCustomEdit(e) {
     const i = Number(e.target.dataset.i);
-    const k = e.target.dataset.k;
     if (!customRules[i]) return;
-    customRules[i][k] = e.target.value;
-    updateCounts();
-    saveOptions();
+    customRules[i][e.target.dataset.k] = e.target.value;
+    updateCounts(); saveOptions();
   }
 
   $('add-custom').addEventListener('click', () => {
     customRules.push({ rule: '', policy: '🚀 节点选择' });
     renderCustomRules();
-    const inputs = $('custom-list').querySelectorAll('input[data-k="rule"]');
-    inputs[inputs.length - 1]?.focus();
+    const ins = $('custom-list').querySelectorAll('input[data-k="rule"]');
+    ins[ins.length - 1]?.focus();
   });
 
-  /* ==================== 生成链接 ==================== */
+  /* ==================== 生成 ==================== */
 
   function backendBase() {
     const manual = $('backend').value.trim().replace(/\/+$/, '');
@@ -619,57 +622,45 @@
     return `${state.origin}/sub`;
   }
 
-  /** JS 对象 → base64(JSON)，保证中文正常编码。 */
   function b64json(value) {
     const bytes = new TextEncoder().encode(JSON.stringify(value));
-    let binary = '';
-    for (const b of bytes) binary += String.fromCharCode(b);
-    return btoa(binary);
+    let bin = '';
+    for (const b of bytes) bin += String.fromCharCode(b);
+    return btoa(bin);
   }
 
   function buildParams() {
     const sub = $('sub').value.trim();
     if (!sub) return { error: '请先填写机场订阅链接。' };
 
-    const params = new URLSearchParams();
-    params.set('target', $('target').value);
-    params.set('url', sub);
-    params.set('config', $('config').value);
-
+    const p = new URLSearchParams();
+    p.set('target', $('target').value);
+    p.set('url', sub);
+    p.set('config', $('config').value);
+    p.set('base', basePath());
     for (const id of ['udp', 'tfo', 'scv', 'emoji', 'append_type', 'sort']) {
-      params.set(id, $(id).checked ? 'true' : 'false');
+      p.set(id, $(id).checked ? 'true' : 'false');
     }
-    if ($('exclude').value.trim()) params.set('exclude', $('exclude').value.trim());
-    if ($('include').value.trim()) params.set('include', $('include').value.trim());
+    if ($('exclude').value.trim()) p.set('exclude', $('exclude').value.trim());
+    if ($('include').value.trim()) p.set('include', $('include').value.trim());
 
     const valid = customRules.filter((r) => r.rule && r.rule.trim());
-    if (valid.length) params.set('custom', b64json(valid));
-    if (disabledSets.size) params.set('disable', b64json([...disabledSets]));
-
-    return { params };
+    if (valid.length) p.set('custom', b64json(valid));
+    if (disabledSets.size) p.set('disable', b64json([...disabledSets]));
+    return { params: p };
   }
 
   function showBanner(which, message) {
-    for (const id of ['banner-err', 'banner-ok', 'banner-warn']) {
-      $(id).classList.toggle('show', id === `banner-${which}`);
-    }
+    for (const id of ['banner-err', 'banner-ok', 'banner-warn']) $(id).classList.toggle('show', id === `banner-${which}`);
     if (which) $(`banner-${which}`).textContent = message;
   }
 
   function explainError(status, text) {
-    if (/No nodes were found|没有解析出任何节点/i.test(text)) {
-      return [
-        `转换失败（HTTP ${status}）：没有解析出任何节点。`,
-        '',
-        '常见原因：',
-        '1) 订阅链接失效、需要特定 User-Agent，或返回了登录页 / 错误页。',
-        '2) 订阅内容里确实一个可用节点都没有。',
-        '3) 机场用了内置引擎还不支持的协议。',
-      ].join('\n');
+    if (/没有解析出任何节点|No nodes were found/i.test(text)) {
+      return `转换失败（HTTP ${status}）：没有解析出任何节点。\n\n` +
+        '常见原因：\n1) 订阅链接失效或需要特定 User-Agent。\n2) 订阅里确实没有可用节点。';
     }
-    if (/抓取失败|Cannot download/i.test(text)) {
-      return `后端无法下载该订阅链接（HTTP ${status}）。请确认订阅链接可以在服务器上直接访问。\n\n${text}`;
-    }
+    if (/抓取失败|Cannot download/i.test(text)) return `后端无法下载该订阅链接（HTTP ${status}）。请确认链接可直接访问。\n\n${text}`;
     return `转换失败（HTTP ${status}）\n\n${text}`;
   }
 
@@ -683,41 +674,36 @@
     $('result').classList.add('show');
     $('qrbox').style.display = 'none';
 
-    const cfgName = $('config').value.split('/').pop();
-    const customCount = customRules.filter((r) => r.rule && r.rule.trim()).length;
     $('meta').innerHTML =
-      `客户端：<b>${$('target').selectedOptions[0].textContent.trim()}</b>` +
-      ` · 规则：<b>${cfgName}</b>` +
+      `场景：<b>${scene === 'campus' ? '校园网内' : '校外'}</b>` +
+      ` · 客户端：<b>${$('target').selectedOptions[0].textContent.trim()}</b>` +
+      ` · 规则：<b>${$('config').value.split('/').pop()}</b>` +
       ` · 关闭规则集：<b>${disabledSets.size}</b>` +
-      ` · 自定义规则：<b>${customCount}</b>`;
+      ` · 自定义规则：<b>${customRules.filter((r) => r.rule && r.rule.trim()).length}</b>`;
 
-    const isLoopback = /^https?:\/\/(127\.0\.0\.1|localhost|\[::1\])(:|\/|$)/.test(state.origin);
-    $('device-hint').textContent = isLoopback
-      ? '⚠ 当前服务运行在本机（127.0.0.1），此链接只能在本机使用。手机等其它设备请改用对外可访问的地址，或部署到公网。'
-      : '把这条链接填进 Clash 客户端即可。它已经包含了你上面的所有规则设置，可以直接分享给同学。';
+    const loopback = /^https?:\/\/(127\.0\.0\.1|localhost|\[::1\])(:|\/|$)/.test(state.origin);
+    $('device-hint').textContent = loopback
+      ? '⚠ 当前服务运行在本机（127.0.0.1），这条链接只能在本机使用。手机等其它设备请把服务改成对外可访问的地址。'
+      : '把这条链接填进 Clash 客户端即可。它已包含你上面所有设置，可以直接分享给同学。';
 
+    updatePacUrl();
     $('out').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   });
 
   $('copy').addEventListener('click', async () => {
-    const text = $('out').textContent;
     try {
-      await navigator.clipboard.writeText(text);
+      await navigator.clipboard.writeText($('out').textContent);
       showBanner('ok', '订阅链接已复制到剪贴板。');
       setTimeout(() => showBanner(null), 2500);
     } catch (e) {
-      const range = document.createRange();
-      range.selectNodeContents($('out'));
-      const sel = getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
+      const r = document.createRange(); r.selectNodeContents($('out'));
+      const s = getSelection(); s.removeAllRanges(); s.addRange(r);
       showBanner('warn', '自动复制失败，已选中文本，请手动复制。');
     }
   });
 
   $('open').addEventListener('click', () => {
-    const link = $('out').textContent;
-    if (link) window.open(link, '_blank', 'noopener');
+    const l = $('out').textContent; if (l) window.open(l, '_blank', 'noopener');
   });
 
   $('qrbtn').addEventListener('click', async () => {
@@ -725,26 +711,21 @@
     if (box.style.display === 'flex') { box.style.display = 'none'; return; }
     const link = $('out').textContent;
     if (!link) return;
-
     if (!window.qrcode) {
-      await new Promise((resolve) => {
+      await new Promise((res) => {
         const s = document.createElement('script');
         s.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js';
-        s.onload = resolve;
-        s.onerror = resolve;
+        s.onload = res; s.onerror = res;
         document.head.appendChild(s);
       });
     }
-    if (!window.qrcode) return showBanner('warn', '二维码组件加载失败（需要联网加载 CDN 资源）。');
+    if (!window.qrcode) return showBanner('warn', '二维码组件加载失败（需要联网）。');
     try {
       const qr = window.qrcode(0, 'M');
-      qr.addData(link);
-      qr.make();
+      qr.addData(link); qr.make();
       box.innerHTML = qr.createImgTag(4, 8);
       box.style.display = 'flex';
-    } catch (e) {
-      showBanner('warn', '链接过长，无法生成二维码。');
-    }
+    } catch (e) { showBanner('warn', '链接过长，无法生成二维码。'); }
   });
 
   $('preview').addEventListener('click', async () => {
@@ -753,8 +734,7 @@
     if (built.error) return showBanner('err', built.error);
 
     const btn = $('preview');
-    btn.disabled = true;
-    btn.textContent = '生成中…';
+    btn.disabled = true; btn.textContent = '生成中…';
     $('preview-card').style.display = 'block';
     $('preview-out').textContent = '正在转换，首次运行需要加载规则文件，可能要十几秒…';
 
@@ -766,37 +746,28 @@
         showBanner('err', '转换失败，请检查订阅链接。');
         return;
       }
-
       const nodes = res.headers.get('X-ZJU-Nodes');
       const rules = res.headers.get('X-ZJU-Rules');
       const groups = res.headers.get('X-ZJU-Groups');
-      const warnings = res.headers.get('X-ZJU-Warnings');
-
-      let head = `# 转换成功\n`;
+      const warn = res.headers.get('X-ZJU-Warnings');
+      let head = '# 转换成功\n';
       if (nodes) head += `# 节点 ${nodes} 个 · 策略组 ${groups} 个 · 规则 ${rules} 条\n`;
-      if (warnings) {
-        head += `# 提示：${decodeURIComponent(warnings).split(' | ').join('\n#       ')}\n`;
-      }
+      if (warn) head += `# 提示：${decodeURIComponent(warn).split(' | ').join('\n#       ')}\n`;
       head += '# ---------------------------------------------------------------\n';
-
-      $('preview-out').textContent =
-        head + text.slice(0, 8000) + (text.length > 8000 ? '\n\n… （已截断）' : '');
+      $('preview-out').textContent = head + text.slice(0, 8000) + (text.length > 8000 ? '\n\n… （已截断）' : '');
       showBanner('ok', `转换成功：${nodes || '?'} 个节点，${rules || '?'} 条规则。`);
     } catch (err) {
       $('preview-out').textContent = `请求失败：${err.message}`;
       showBanner('err', '无法连接到转换服务。');
     } finally {
-      btn.disabled = false;
-      btn.textContent = '预览配置';
+      btn.disabled = false; btn.textContent = '预览配置';
     }
   });
 
   $('config').addEventListener('change', () => {
-    disabledSets = new Set();
-    catalog = null;
+    disabledSets = new Set(); catalog = null;
     $('rulesets').innerHTML = '<div class="empty">正在加载规则清单…</div>';
-    loadCatalog();
-    saveOptions();
+    loadCatalog(); saveOptions();
   });
 
   $('reset').addEventListener('click', () => {
@@ -804,12 +775,45 @@
     location.reload();
   });
 
-  function escapeHtml(s) {
-    return String(s ?? '')
-      .replace(/&/g, '&amp;')
-      .replace(/</g, '&lt;')
-      .replace(/>/g, '&gt;')
-      .replace(/"/g, '&quot;');
+  /* ==================== 场景 / PAC ==================== */
+
+  for (const el of $('scenes').querySelectorAll('.scene')) {
+    el.addEventListener('click', (e) => {
+      e.preventDefault();
+      scene = el.dataset.scene;
+      renderScenes();
+      saveOptions();
+    });
+  }
+
+  function updatePacUrl() {
+    $('pac-url').value = `${state.origin}/proxy.pac${pacMode === 'global' ? '?mode=global' : ''}`;
+    $('pac-smart').classList.toggle('active', pacMode === 'smart');
+    $('pac-global').classList.toggle('active', pacMode === 'global');
+  }
+
+  for (const b of $('method-pick').querySelectorAll('button')) {
+    b.addEventListener('click', () => {
+      for (const x of $('method-pick').querySelectorAll('button')) x.classList.toggle('active', x === b);
+      $('method-system').classList.toggle('on', b.dataset.method === 'system');
+      $('method-pac').classList.toggle('on', b.dataset.method === 'pac');
+    });
+  }
+
+  $('pac-smart').addEventListener('click', () => { pacMode = 'smart'; updatePacUrl(); saveOptions(); });
+  $('pac-global').addEventListener('click', () => { pacMode = 'global'; updatePacUrl(); saveOptions(); });
+  $('copy-pac').addEventListener('click', async () => {
+    try {
+      await navigator.clipboard.writeText($('pac-url').value);
+      showBanner('ok', 'PAC 地址已复制。');
+      setTimeout(() => showBanner(null), 2500);
+    } catch (e) { showBanner('warn', '复制失败，请手动选中复制。'); }
+  });
+  $('open-pac').addEventListener('click', () => window.open($('pac-url').value, '_blank', 'noopener'));
+
+  function esc(s) {
+    return String(s ?? '').replace(/&/g, '&amp;').replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;').replace(/"/g, '&quot;');
   }
 
   /* ==================== 启动 ==================== */
@@ -817,6 +821,7 @@
   (async () => {
     await discoverConfig();
     renderCustomRules();
+    updatePacUrl();
     await loadCatalog();
     updateCounts();
     saveOptions();

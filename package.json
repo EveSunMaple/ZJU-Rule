@@ -10,7 +10,7 @@
     "dev": "node local/server.mjs",
     "stop": "./local/stop.sh",
     "build": "node scripts/vercel-build.mjs",
-    "test": "node tools/test-parsers.mjs && node tools/test-engine.mjs && node tools/test-journey.mjs && node tools/test-mihomo.mjs && node tools/test-vercel-sim.mjs",
+    "test": "node tools/test-parsers.mjs && node tools/test-pac.mjs && node tools/test-engine.mjs && node tools/test-journey.mjs && node tools/test-mihomo.mjs && node tools/test-vercel-sim.mjs",
     "test:parsers": "node tools/test-parsers.mjs",
     "test:engine": "node tools/test-engine.mjs",
     "test:journey": "node tools/test-journey.mjs",
@@ -19,7 +19,8 @@
     "probe-rules": "node tools/probe-rule-types.mjs",
     "validate": "node tools/validate-config.mjs",
     "check-urls": "node tools/fix-rule-urls.mjs --check",
-    "fix-urls": "node tools/fix-rule-urls.mjs"
+    "fix-urls": "node tools/fix-rule-urls.mjs",
+    "test:pac": "node tools/test-pac.mjs"
   },
   "engines": {
     "node": ">=18"

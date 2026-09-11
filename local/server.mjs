@@ -38,6 +38,7 @@ import { fileURLToPath } from 'node:url';
 import { rewriteBases } from '../lib/rule-urls.mjs';
 import { buildRuleCatalog } from '../lib/catalog.mjs';
 import { handleSub } from '../lib/handler.mjs';
+import { buildPac } from '../lib/pac.mjs';
 
 const __dirname = path.dirname(fileURLToPath(import.meta.url));
 const ROOT = path.resolve(__dirname, '..');
@@ -367,6 +368,34 @@ function createWebServer() {
         } catch (err) {
           return sendJson(res, 500, { ok: false, error: err.message });
         }
+      }
+
+      // PAC 文件：不开系统代理、只让浏览器走代理时用
+      if (url.pathname === '/proxy.pac') {
+        try {
+          const { pac, stats } = await buildPac(
+            {
+              mode: url.searchParams.get('mode') || 'smart',
+              proxy: url.searchParams.get('proxy') || '127.0.0.1:7890',
+              extraDirect: (url.searchParams.get('direct') || '').split(',').filter(Boolean),
+              extraProxy: (url.searchParams.get('proxy_domains') || '').split(',').filter(Boolean),
+            },
+            { origin, fsRoot: ROOT, cacheKey: 'local-pac' },
+          );
+          log(`生成 PAC（${stats.mode} 模式，${(stats.bytes / 1024).toFixed(0)} KB）`);
+          res.writeHead(200, {
+            'Content-Type': 'application/x-ns-proxy-autoconfig; charset=utf-8',
+            'Content-Length': Buffer.byteLength(pac, 'utf8'),
+            'Cache-Control': 'no-store',
+            'Access-Control-Allow-Origin': '*',
+          });
+          res.end(pac);
+        } catch (err) {
+          log(`✗ PAC 生成失败: ${err.message}`);
+          res.writeHead(500, { 'Content-Type': 'text/plain; charset=utf-8' });
+          res.end(`PAC 生成失败：${err.message}`);
+        }
+        return;
       }
 
       if (url.pathname === '/api/health') {

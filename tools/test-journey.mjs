@@ -172,5 +172,61 @@ const badCfgRes = await fetch(buildSubscribeUrl(`${ORIGIN}/sub`, { sub: SUB, tar
 const badCfgText = await badCfgRes.text();
 check('规则配置不存在时提示清楚', badCfgRes.status >= 400 && /找不到规则配置/.test(badCfgText), badCfgText.slice(0, 120));
 
+/* --- 9. 校园网模式 --- */
+console.log('\n⑨ 校园网模式（开着系统代理也能上内网）');
+
+const campusRes = await fetch(
+  buildSubscribeUrl(`${ORIGIN}/sub`, { sub: SUB, target: 'clash', config: CONFIG }) +
+    '&base=' + encodeURIComponent('/configs/clash-base-campus.yaml'),
+);
+const campusBody = await campusRes.text();
+check('校园网模式转换成功', campusRes.status === 200, `状态码 ${campusRes.status}`);
+check('使用校内 DNS 10.10.0.21', campusBody.includes('10.10.0.21'));
+check('浙大域名强制走校内 DNS 解析', /nameserver-policy:/.test(campusBody) && /"\+\.zju\.edu\.cn": \[10\.10\.0\.21\]/.test(campusBody));
+check('改用 redir-host 而不是 fake-ip', /enhanced-mode: redir-host/.test(campusBody));
+check('不配置 fallback（避免内网域名被公共 DNS 覆盖）', !/^\s*fallback:/m.test(campusBody));
+check('浙大规则仍然齐全', campusBody.includes('"DOMAIN-SUFFIX,zju.edu.cn,✔ ZJU内网"'));
+check('TUN 模式下排除校内网段', /route-exclude-address:/.test(campusBody) && /10\.0\.0\.0\/8/.test(campusBody));
+
+const campusCfg = validate(campusBody);
+check('校园网配置结构合法', campusCfg.errors.length === 0, campusCfg.errors.slice(0, 3).join(' / '));
+
+/* --- 10. 基础配置清单 --- */
+console.log('\n⑩ 基础配置清单');
+
+const bases = cat.bases || [];
+check('清单里有普通模式', bases.some((b) => b.id === 'default'));
+check('清单里有校园网模式', bases.some((b) => b.id === 'campus'));
+for (const b of bases) {
+  const r = await fetch(`${ORIGIN}${b.path}`);
+  check(`基础配置可访问：${b.name}（${b.path}）`, r.ok, `HTTP ${r.status}`);
+}
+
+/* --- 11. PAC 文件（不开系统代理的方案）--- */
+console.log('\n⑪ PAC 文件');
+
+const pacRes = await fetch(`${ORIGIN}/proxy.pac`);
+const pacText = await pacRes.text();
+check('PAC 接口返回 200', pacRes.status === 200, `状态码 ${pacRes.status}`);
+check('Content-Type 正确', /proxy-autoconfig/.test(pacRes.headers.get('content-type') || ''));
+check('PAC 里有 FindProxyForURL', pacText.includes('function FindProxyForURL'));
+check('PAC 指向本地代理端口', pacText.includes('PROXY 127.0.0.1:7890'));
+check('PAC 里浙大域名直连', /ZJU_DOMAINS/.test(pacText) && pacText.includes('"zju.edu.cn":1'));
+check('PAC 里 cc98.org 直连', pacText.includes('"cc98.org":1'));
+check('PAC 里内网 IP 段直连', pacText.includes('10.0.0.0/8'));
+
+const pacGlobal = await (await fetch(`${ORIGIN}/proxy.pac?mode=global`)).text();
+check('可以切换为全局模式', pacGlobal.includes('DIRECT_DOMAINS') && !pacGlobal.includes('PROXY_DOMAINS,'));
+
+/* --- 12. 补充规则（gfwlist 停更后缺失的域名）--- */
+console.log('\n⑫ 补充的代理域名');
+
+const extraUrl = buildSubscribeUrl(`${ORIGIN}/sub`, { sub: SUB, target: 'clash', config: CONFIG });
+const extraBody = await (await fetch(extraUrl)).text();
+check('x.com 走代理（gfwlist 停更后新增）', extraBody.includes('"DOMAIN-SUFFIX,x.com,🚀 节点选择"'));
+check('chatgpt.com 走代理', extraBody.includes('"DOMAIN-SUFFIX,chatgpt.com,🚀 节点选择"'));
+check('claude.ai 走代理', extraBody.includes('"DOMAIN-SUFFIX,claude.ai,🚀 节点选择"'));
+check('threads.net 走代理', extraBody.includes('"DOMAIN-SUFFIX,threads.net,🚀 节点选择"'));
+
 console.log(`\n通过 ${passed} 项，失败 ${failed} 项\n`);
 process.exit(failed ? 1 : 0);

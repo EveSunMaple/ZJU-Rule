@@ -135,6 +135,26 @@ curl -s "http://127.0.0.1:8080/sub?url=<订阅>&config=/Clash/config/ZJU.ini" \
 
 ---
 
+## 三点八、两个基础配置的区别
+
+| 文件 | 用在哪 | DNS |
+| --- | --- | --- |
+| `clash-base.yaml` | 校外 / 家里 | 公共 DNS（阿里 DoH 等） |
+| `clash-base-campus.yaml` | 宿舍 / 实验室 / ZJUWLAN | 浙大域名走校内 DNS `10.10.0.21` |
+
+校园网版的三个关键设置（**不建议随便改**）：
+
+1. `nameserver` 把 `10.10.0.21` 放第一位
+2. `nameserver-policy` 对 `+.zju.edu.cn` / `+.cc98.org` / `+.zjusec.com` 强制指定校内 DNS
+   —— 这是「开着代理也能上内网」的关键
+3. **不配 `fallback`** —— fallback 会并发查公共 DNS，而内网域名在公共 DNS 上查不到，
+   结果可能反而被采纳
+
+网页上的「你在哪里用」选择器就是切这两个文件。也可以直接在链接里改
+`&base=/configs/clash-base-campus.yaml`。
+
+---
+
 ## 四、改端口 / DNS / 嗅探
 
 编辑 `clash-base.yaml`。这个文件里只有「代理怎么跑」，没有分流规则，

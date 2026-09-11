@@ -21,6 +21,7 @@ import path from 'node:path';
 import { fileURLToPath } from 'node:url';
 
 import { DEFAULT_LIVE_BASE, rewriteBases } from '../lib/rule-urls.mjs';
+import { buildPac } from '../lib/pac.mjs';
 
 const ROOT = path.resolve(path.dirname(fileURLToPath(import.meta.url)), '..');
 const OUT = path.join(ROOT, 'public');
@@ -86,7 +87,21 @@ for (const name of await readdir(configDir)) {
 log(`改写 ${iniCount} 个 ini，共 ${iniReplacements} 处规则源地址`);
 
 /* ------------------------------------------------------------------ */
-/* 3. 静态页面                                                          */
+/* 3.5 PAC 文件（不开系统代理时用）                                      */
+/* ------------------------------------------------------------------ */
+
+log('生成 PAC 文件 …');
+for (const [mode, file] of [['smart', 'proxy.pac'], ['global', 'proxy-global.pac']]) {
+  const { pac, stats } = await buildPac({ mode }, { fsRoot: ROOT, cacheKey: `build-${mode}` });
+  await writeFile(path.join(OUT, file), pac, 'utf8');
+  log(
+    `  ${file}  ${(stats.bytes / 1024).toFixed(0)} KB  ` +
+      `(${mode === 'smart' ? `代理名单 ${stats.proxyDomains} 个域名` : `国内直连 ${stats.directDomains} 个域名`})`,
+  );
+}
+
+/* ------------------------------------------------------------------ */
+/* 4. 静态页面                                                          */
 /* ------------------------------------------------------------------ */
 
 log('复制页面资源 …');

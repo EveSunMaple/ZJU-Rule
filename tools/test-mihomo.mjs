@@ -180,6 +180,8 @@ const CASES = [
   ['特殊字符节点名/密码', { subUrl: WEIRD_SUB }, {}],
   ['关闭 emoji / 开启排序', { subUrl: FULL_SUB, options: { emoji: false, sort: true, appendType: true } }, {}],
   ['改用其它规则配置', { subUrl: FULL_SUB, profile: '/Clash/config/ACL4SSR_Mini.ini' }, {}],
+  ['校园网模式（校内 DNS）', { subUrl: FULL_SUB, base: '/configs/clash-base-campus.yaml' }, {}],
+  ['普通模式（公共 DNS）', { subUrl: FULL_SUB, base: '/configs/clash-base.yaml' }, {}],
   ['混合模式（base64 节点列表）', { subUrl: FULL_SUB, target: 'mixed' }, { skipMihomo: true }],
 ];
 

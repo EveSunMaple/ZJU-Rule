@@ -38,8 +38,10 @@ unified-delay: true
 tcp-concurrent: true
 # 进程匹配策略：strict 更准确但需要权限，可改为 always / off
 find-process-mode: strict
-# TLS 指纹，伪装成普通浏览器
-global-client-fingerprint: chrome
+
+# 注意：不要在这里写 global-client-fingerprint。
+# Mihomo v1.19+ 已经**移除**了该配置项，写了会直接导致配置校验失败。
+# TLS 指纹改成写在各节点上（转换引擎会自动从订阅的 fp= 参数填进去）。
 
 profile:
   # 记住每个策略组手动选过的节点，订阅更新后不丢

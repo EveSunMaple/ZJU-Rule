@@ -167,9 +167,24 @@ curl -s "http://127.0.0.1:8080/sub?url=<订阅>&config=/Clash/config/ZJU.ini" \
   | node tools/validate-config.mjs -
 ```
 
+**Q：客户端提示「订阅配置校验失败」？**
+说明生成的配置里有当前内核不支持的写法。项目对此有两道防线：
+1. 生成时自动过滤内核不支持的规则类型（如 `USER-AGENT`、`URL-REGEX`）；
+2. `npm run test:mihomo` 会用**真的 mihomo 内核**加载一遍生成的配置。
+
+改过 `.list` 或 `clash-base.yaml` 之后建议跑一次：
+
+```bash
+npm run test:mihomo    # 用真内核校验（首次会自动下载 mihomo，约 16MB）
+npm run probe-rules    # 查看当前内核到底支持哪些规则类型
+```
+
 **Q：怎么确认部署没问题？**
 ```bash
-npm test          # 63 项测试：解析器 + 引擎 + Vercel 等价性
+npm test    # 108 项测试
 ```
-其中 `tools/test-vercel-sim.mjs` 会用一个纯静态服务器模拟 Vercel 环境
-（没有文件系统、没有外部后端），完整验证「只部署到 Vercel 就能用」这个目标。
+其中：
+- `tools/test-vercel-sim.mjs` 用一个纯静态服务器模拟 Vercel 环境
+  （没有文件系统、没有外部后端），验证「只部署到 Vercel 就能用」；
+- `tools/test-mihomo.mjs` 用真的 mihomo 内核加载生成的配置，
+  并反向验证「故意插入非法规则时测试确实能抓到」。

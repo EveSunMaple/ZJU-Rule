@@ -102,6 +102,39 @@ custom_proxy_group=🇭🇰 香港节点`url-test`(港|HK|Hong Kong)`http://www.
 
 ---
 
+## 三点五、规则文件的两种写法（容易踩坑）
+
+`ruleset=` 后面的规则源有两种写法，两种都支持：
+
+```ini
+; 写法一：完整 URL —— 仓库里 ZJU.ini 和所有 *_Online_*.ini 用这个
+ruleset=✔ ZJU内网,https://raw.githubusercontent.com/lizhist/ZJU-Rule/master/Clash/ZJU.list
+
+; 写法二：相对路径 —— 仓库里 ACL4SSR_*.ini（不带 _Online_ 的那些）用这个
+ruleset=✔ ZJU内网,rules/ZJU-Rule/Clash/ZJU.list
+```
+
+写法二来自 subconverter 的本地规则目录约定：`rules/ZJU-Rule/` 就是本仓库的一份 checkout，
+所以 `rules/ZJU-Rule/Clash/ZJU.list` 等价于仓库根目录下的 `Clash/ZJU.list`。
+转换引擎会自动识别这种写法。
+
+> ⚠️ 两种写法都**不要**写成 `Clash/ZJU.list` 之外的相对路径，
+> 也别写指向第三方仓库的 `rules/其它仓库/...` —— 那些文件不在本仓库里，加载不到。
+
+**如果规则文件加载失败会怎样？**
+
+- 少数几个失败 → 生成时给出提示，其余规则照常工作
+- 全部失败 → 直接报错，不会静默产出一份「能加载但完全不分流」的配置
+
+改完 `ruleset=` 之后建议验证一下：
+
+```bash
+curl -s "http://127.0.0.1:8080/sub?url=<订阅>&config=/Clash/config/ZJU.ini" \
+  | node tools/validate-config.mjs -
+```
+
+---
+
 ## 四、改端口 / DNS / 嗅探
 
 编辑 `clash-base.yaml`。这个文件里只有「代理怎么跑」，没有分流规则，

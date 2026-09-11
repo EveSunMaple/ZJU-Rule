@@ -16,18 +16,19 @@
 
 import { readFile } from 'node:fs/promises';
 
+import { MIHOMO_RULE_TYPES } from '../lib/engine/clash.mjs';
+
 const BUILTIN_POLICIES = new Set([
   'DIRECT', 'REJECT', 'REJECT-DROP', 'PASS', 'COMPATIBLE', 'GLOBAL',
 ]);
 
-/** 允许出现在规则里的类型。 */
-const RULE_TYPES = new Set([
-  'DOMAIN', 'DOMAIN-SUFFIX', 'DOMAIN-KEYWORD', 'DOMAIN-REGEX',
-  'GEOSITE', 'GEOIP', 'IP-CIDR', 'IP-CIDR6', 'IP-SUFFIX', 'SRC-IP-CIDR',
-  'SRC-PORT', 'DST-PORT', 'PROCESS-NAME', 'PROCESS-PATH',
-  'USER-AGENT', 'URL-REGEX', 'NETWORK', 'MATCH', 'RULE-SET', 'SCRIPT',
-  'IN-PORT', 'IN-TYPE', 'IN-USER', 'IN-NAME', 'SUB-RULE', 'AND', 'OR', 'NOT',
-]);
+/**
+ * 允许出现在规则里的类型。
+ *
+ * 直接复用引擎里的那份表（用真的 mihomo 二进制探测出来的），
+ * 避免这里手写一份、那边漏一个，最后客户端报「订阅配置校验失败」。
+ */
+const RULE_TYPES = MIHOMO_RULE_TYPES;
 
 /** 从 flow 风格的 `- {a: b, c: d}` 里取字段（够用即可）。 */
 function flowFields(line) {

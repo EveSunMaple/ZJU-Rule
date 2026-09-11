@@ -21,7 +21,7 @@
 - ✅ 规则文件全部自托管，整套配置自包含，不依赖任何第三方仓库
 - ✅ **一键部署到 Vercel 即可用**，不需要配置任何后端 → [DEPLOY.md](DEPLOY.md)
 - ✅ 网页上可以勾选规则集、添加自定义规则，设置编码进订阅链接，可直接分享
-- ✅ 63 项自动化测试覆盖解析器 / 引擎 / Vercel 部署等价性
+- ✅ 108 项自动化测试，包括**用真的 mihomo 内核校验生成的配置**
 
 ### 支持的功能
 
@@ -129,7 +129,10 @@ scripts/
 tools/
   test-parsers.mjs       解析器测试（21 项）
   test-engine.mjs        引擎端到端测试（27 项）
+  test-journey.mjs       用户旅程测试（36 项）
+  test-mihomo.mjs        ★ 用真 mihomo 内核校验生成的配置（9 项）
   test-vercel-sim.mjs    Vercel 部署等价性测试（15 项）
+  probe-rule-types.mjs   探测内核支持哪些规则类型
   validate-config.mjs    生成的 Clash 配置结构校验
   fix-rule-urls.mjs      失效规则链接修复
 DEPLOY.md                部署指南
@@ -163,13 +166,20 @@ ZJU Rule 已正确配置，取消绕过后才能实现内网穿透等高级功�
 ## 开发
 
 ```bash
-npm test              # 全部 63 项测试
+npm test              # 全部 108 项测试
 npm run test:parsers  # 只测解析器（离线，不需要服务）
 npm run test:engine   # 引擎端到端（需要 npm start 先跑起来）
+npm run test:journey  # 模拟同学从开网页到拿到订阅链接的完整流程
+npm run test:mihomo   # 用真的 mihomo 内核校验生成的配置（最关键的一关）
 npm run test:vercel   # 模拟 Vercel 环境（静态站点 + 无后端，验证零依赖可用）
+npm run probe-rules   # 探测当前内核支持哪些规则类型
 npm run check-urls    # 检查规则链接是否失效
 npm run build         # 本地构建 Vercel 产物到 public/
 ```
+
+> `test:mihomo` 会下载 mihomo 官方二进制（约 16MB，只需一次），
+> 然后用 `mihomo -t` 真正加载一遍生成的配置。
+> 这是唯一能保证客户端不报「订阅配置校验失败」的验证方式。
 
 改完规则后校验生成结果：
 
@@ -193,6 +203,12 @@ curl -s "http://127.0.0.1:8080/sub?url=<订阅>&config=/Clash/config/ZJU.ini" \
 本地运行时所有数据都在你自己机器上，不经过任何第三方。
 部署到公网时，订阅链接只经过你自己部署的实例，本项目不做任何存储。
 **不要**使用来路不明的公共转换服务。
+
+**Q：客户端报「订阅配置校验失败」？**
+通常是因为规则文件里混了当前内核不支持的规则类型。
+项目已经处理了这个问题：生成配置时会自动过滤掉不支持的规则并给出提示，
+`npm run test:mihomo` 会用真内核验证。如果你自己改了 `.list` 文件引入新类型，
+跑一下 `npm run probe-rules` 确认内核支持。
 
 **Q：想要 Surge / Quantumult X 格式？**
 内置引擎输出 Clash 系配置。需要其它格式的话配一个 `SUBCONVERTER_BACKEND`，

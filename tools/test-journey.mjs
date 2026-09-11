@@ -181,12 +181,16 @@ const campusRes = await fetch(
 );
 const campusBody = await campusRes.text();
 check('校园网模式转换成功', campusRes.status === 200, `状态码 ${campusRes.status}`);
-check('使用校内 DNS 10.10.0.21', campusBody.includes('10.10.0.21'));
-check('浙大域名强制走校内 DNS 解析', /nameserver-policy:/.test(campusBody) && /"\+\.zju\.edu\.cn": \[10\.10\.0\.21\]/.test(campusBody));
-check('改用 redir-host 而不是 fake-ip', /enhanced-mode: redir-host/.test(campusBody));
-check('不配置 fallback（避免内网域名被公共 DNS 覆盖）', !/^\s*fallback:/m.test(campusBody));
+// 核心：Clash 不接管 DNS，直连域名交给系统解析器。
+// 校园网里系统 DNS 就是校内 DNS，所以 cc98.org（解析到 10.10.98.98）、
+// 教务网 zdbk.zju.edu.cn（解析到 10.202.78.14）都能拿到和不开代理时一样的地址。
+check('Clash 不接管 DNS（直连交给系统解析）', /^dns:\n\s+enable: false/m.test(campusBody));
+check('没有启用 nameserver-policy（那层是多余且脆弱的）', !/^nameserver-policy:/m.test(campusBody));
+check('嗅探已关闭（减少每连接开销）', /^sniffer:\n\s+enable: false/m.test(campusBody));
+check('保留手动指定校内 DNS 的备选方案（注释形式）', campusBody.includes('10.10.0.21'));
 check('浙大规则仍然齐全', campusBody.includes('"DOMAIN-SUFFIX,zju.edu.cn,✔ ZJU内网"'));
-check('TUN 模式下排除校内网段', /route-exclude-address:/.test(campusBody) && /10\.0\.0\.0\/8/.test(campusBody));
+check('cc98.org 显式直连', campusBody.includes('"DOMAIN-SUFFIX,cc98.org,✔ ZJU内网"'));
+check('校内 10.x 网段直连', campusBody.includes('"IP-CIDR,10.0.0.0/8,✔ ZJU内网,no-resolve"'));
 
 const campusCfg = validate(campusBody);
 check('校园网配置结构合法', campusCfg.errors.length === 0, campusCfg.errors.slice(0, 3).join(' / '));

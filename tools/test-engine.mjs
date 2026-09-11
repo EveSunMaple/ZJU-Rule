@@ -254,6 +254,65 @@ await check('mixed 输出 base64 节点列表', async () => {
   assert.match(decoded, /^vmess:\/\//m);
 });
 
+console.log('\n校园网域名路由（保证所有校内资源直连）');
+await check('校内域名全部命中 ✔ ZJU内网 策略组', async () => {
+  const res = await convert({ subUrl: SUB_URL, target: 'clash' }, ctx);
+  const rules = res.body.slice(res.body.indexOf('rules:'));
+
+  // 这些域名的 DNS 只在校内能解析，且解析出来是内网私有 IP
+  // （实测 cc98.org -> 10.10.98.98，zdbk.zju.edu.cn -> 10.202.78.14），
+  // 一旦被送到代理节点就必然打不开。
+  const mustBeDirect = [
+    'DOMAIN-SUFFIX,zju.edu.cn,✔ ZJU内网',
+    'DOMAIN-SUFFIX,cc98.org,✔ ZJU内网',
+    'DOMAIN-KEYWORD,cc98,✔ ZJU内网',
+    'DOMAIN-SUFFIX,zjusec.com,✔ ZJU内网',
+    'DOMAIN-SUFFIX,zjuers.com,✔ ZJU内网',
+    'DOMAIN-SUFFIX,zjuintl.edu.cn,✔ ZJU内网',
+    'DOMAIN-SUFFIX,pintia.cn,✔ ZJU内网',
+    'IP-CIDR,10.0.0.0/8,✔ ZJU内网,no-resolve',
+  ];
+  const missing = mustBeDirect.filter((r) => !rules.includes(`"${r}"`));
+  if (missing.length) throw new Error('缺少规则：\n      ' + missing.join('\n      '));
+});
+
+await check('校内规则排在所有代理规则之前', async () => {
+  const res = await convert({ subUrl: SUB_URL, target: 'clash' }, ctx);
+  const rules = res.body.slice(res.body.indexOf('rules:'));
+  const zju = rules.indexOf('"DOMAIN-SUFFIX,zju.edu.cn,✔ ZJU内网"');
+  const cc98 = rules.indexOf('"DOMAIN-SUFFIX,cc98.org,✔ ZJU内网"');
+  const firstProxy = rules.indexOf('"DOMAIN-SUFFIX,google.com,🚀 节点选择"');
+  if (zju < 0 || cc98 < 0) throw new Error('校内规则缺失');
+  if (firstProxy >= 0 && (zju > firstProxy || cc98 > firstProxy)) {
+    throw new Error('校内规则排在代理规则后面，会被抢先匹配');
+  }
+});
+
+await check('✔ ZJU内网 策略组默认直连', async () => {
+  const res = await convert({ subUrl: SUB_URL, target: 'clash' }, ctx);
+  const m = /- name: "✔ ZJU内网"\n\s+type: \w+\n\s+proxies:\n\s+- "([^"]+)"/.exec(res.body);
+  if (!m) throw new Error('找不到 ✔ ZJU内网 策略组');
+  if (m[1] !== 'DIRECT') throw new Error(`第一个成员应该是 DIRECT，实际是 ${m[1]}`);
+});
+
+await check('校内域名即使节点名含 ZJU 字样也仍以 DIRECT 优先', async () => {
+  // 万一机场有叫「ZJU」「浙大」的节点，正则会把它们加进 ZJU 组，
+  // 但 []DIRECT 是字面量、排在最前，所以默认仍然是直连。
+  const links = [
+    `ss://${Buffer.from('aes-256-gcm:pw').toString('base64')}@1.2.3.4:8388#ZJU 浙大专线`,
+    `ss://${Buffer.from('aes-256-gcm:pw').toString('base64')}@1.2.3.5:8388#香港 01`,
+  ].join('\n');
+  const { writeFile } = await import('node:fs/promises');
+  await writeFile('local/tmp/zju-name-test.txt', Buffer.from(links).toString('base64'), 'utf8');
+
+  const res = await convert(
+    { subUrl: `${ORIGIN}/local/tmp/zju-name-test.txt`, target: 'clash' },
+    ctx,
+  );
+  const m = /- name: "✔ ZJU内网"\n\s+type: \w+\n\s+proxies:\n\s+- "([^"]+)"/.exec(res.body);
+  if (!m || m[1] !== 'DIRECT') throw new Error(`默认出口应为 DIRECT，实际 ${m?.[1]}`);
+});
+
 console.log('\n错误处理');
 await check('不支持的 target 给出明确提示', async () => {
   await assert.rejects(

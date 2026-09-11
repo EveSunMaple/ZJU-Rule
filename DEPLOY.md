@@ -202,7 +202,7 @@ npm run probe-rules    # 查看当前内核到底支持哪些规则类型
 
 **Q：怎么确认部署没问题？**
 ```bash
-npm test    # 170 项测试
+npm test    # 175 项测试
 ```
 其中：
 - `tools/test-vercel-sim.mjs` 用一个纯静态服务器模拟 Vercel 环境

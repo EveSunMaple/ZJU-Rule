@@ -176,8 +176,8 @@
       <label class="scene" data-scene="campus">
         <input type="radio" name="scene" value="campus">
         <span class="t"><span class="dot"></span>校园网内</span>
-        <span class="d">宿舍 / 实验室 / ZJUWLAN。<b>浙大域名改用校内 DNS（10.10.0.21）解析</b>，
-          所以开着系统代理也能正常登录校内网站。</span>
+        <span class="d">宿舍 / 实验室 / ZJUWLAN。<b>DNS 交给系统（也就是校园网）解析</b>，
+          校内域名拿到的是内网地址，所以开着系统代理也能正常上内网，速度和不挂代理一样。</span>
       </label>
       <label class="scene" data-scene="default">
         <input type="radio" name="scene" value="default">
@@ -314,10 +314,17 @@
           另外那些策略组（<code class="k">♻️ 自动选择</code>、<code class="k">🇭🇰 香港节点</code>、
           <code class="k">📹 油管视频</code> …）都是给规则自动调用的，<b>你不需要手动去选</b>。
           <br><br>
-          <b>为什么以前开了代理就上不了内网？</b><br>
-          因为 Clash 默认用公共 DNS 解析域名，而 <code class="k">zju.edu.cn</code>、
-          <code class="k">cc98.org</code> 这类域名只有校内 DNS 才解析得出正确地址。
-          选了「校园网内」之后，配置会给这些域名强制指定校内 DNS（10.10.0.21），问题就没了。
+          <b>为什么以前开了代理就上不了内网、还会变慢？</b><br>
+          Clash 默认自己配一套公共 DNS（阿里 DoH 之类）来解析域名。但浙大很多域名
+          <b>只在校内解析，而且解析出来是内网私有 IP</b> —— 实测
+          <code class="k">cc98.org</code> → <code class="k">10.10.98.98</code>、
+          <code class="k">zdbk.zju.edu.cn</code>（教务网）→ <code class="k">10.202.78.14</code>。<br><br>
+          公共 DNS 要么查不到，要么返回一个外网地址，于是「打不开」；
+          就算凑巧解析对了，Clash 自己维护的 DNS 缓存和系统是两套，
+          每次都要多转发一次查询，于是「变慢」。<br><br>
+          选了「校园网内」之后，配置会<b>让 Clash 不再接管 DNS</b>，
+          直连的域名全部交给系统解析器 —— 校园网里系统 DNS 本来就是 DHCP 下发的校内 DNS，
+          所以解析结果和你<b>不开代理时完全一致</b>，速度也一样。
         </div>
       </div>
 

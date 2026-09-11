@@ -1,19 +1,38 @@
 # ZJU 内网
 # 校内直连，校外通过内网穿透或 RVPN 访问
 
-# 域名
+# ---- 浙大主域名 ------------------------------------------------------------
+# 覆盖教务网 (zdbk)、学在浙大 (course/classroom)、图书馆 (libweb)、
+# 统一身份认证 (zjuam)、校园卡 (ecard)、邮箱 (mail)、云盘 (pan)、
+# RVPN (rvpn/myvpn)、各学院站点等全部 *.zju.edu.cn
 DOMAIN-SUFFIX,zju.edu.cn
 
-# CC98
+# ---- 校内社区 / 论坛 -------------------------------------------------------
+# 这几个域名的 DNS 只在校内解析，而且解析出来是**内网私有 IP**
+# （实测 cc98.org -> 10.10.98.98，zjusec.com -> 10.214.96.14），
+# 所以必须直连 —— 走代理一定打不开。
+DOMAIN-SUFFIX,cc98.org
 DOMAIN-KEYWORD,cc98
+
+DOMAIN-SUFFIX,zjusec.com
+DOMAIN-SUFFIX,zjuers.com
+
+# 浙大国际联合学院（海宁国际校区）
+DOMAIN-SUFFIX,zjuintl.edu.cn
+
+# ---- 校内教学平台 ----------------------------------------------------------
+# PTA 拼题A：很多课程的作业和实验平台，服务器在浙大
+DOMAIN-SUFFIX,pintia.cn
 
 # NexusHD
 DOMAIN-KEYWORD,nexushd
 
-# 校内 IP
+# ---- 校内 IP 段 ------------------------------------------------------------
+# 浙大校内大量服务直接就是 10.x 地址，必须直连
 IP-CIDR,10.0.0.0/8,no-resolve
 
-# 通过 IP 认证的资源
+# ---- 通过 IP 认证的学术资源 ------------------------------------------------
+# 这些库靠「校园网 IP 认证」，必须在校园网内直连才能用。
 # 请勿添加可通过统一身份认证访问的国外资源，此类资源无需内网环境，可通过代理加速访问
 DOMAIN-SUFFIX,acm.org
 DOMAIN-SUFFIX,cnki.net

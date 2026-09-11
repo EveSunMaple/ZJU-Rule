@@ -139,16 +139,31 @@ curl -s "http://127.0.0.1:8080/sub?url=<订阅>&config=/Clash/config/ZJU.ini" \
 
 | 文件 | 用在哪 | DNS |
 | --- | --- | --- |
-| `clash-base.yaml` | 校外 / 家里 | 公共 DNS（阿里 DoH 等） |
-| `clash-base-campus.yaml` | 宿舍 / 实验室 / ZJUWLAN | 浙大域名走校内 DNS `10.10.0.21` |
+| `clash-base.yaml` | 校外 / 家里 | Clash 自己解析（公共 DoH） |
+| `clash-base-campus.yaml` | 宿舍 / 实验室 / ZJUWLAN | **交给系统解析**（`dns.enable: false`） |
 
-校园网版的三个关键设置（**不建议随便改**）：
+校园网版的关键设置（**不建议随便改**）：
 
-1. `nameserver` 把 `10.10.0.21` 放第一位
-2. `nameserver-policy` 对 `+.zju.edu.cn` / `+.cc98.org` / `+.zjusec.com` 强制指定校内 DNS
-   —— 这是「开着代理也能上内网」的关键
-3. **不配 `fallback`** —— fallback 会并发查公共 DNS，而内网域名在公共 DNS 上查不到，
-   结果可能反而被采纳
+1. `dns.enable: false` —— Clash 不接管 DNS，直连域名交给系统解析器。
+   校园网里系统 DNS 就是 DHCP 下发的校内 DNS，所以解析结果和不开代理时完全一致。
+2. `sniffer.enable: false` —— 嗅探在「系统代理」场景下只会增加每连接开销
+
+**为什么不硬编码校内 DNS（比如 10.10.0.21）？**
+
+浙大很多校内域名解析出来是**内网私有 IP**：
+
+| 域名 | 实测解析结果 |
+| --- | --- |
+| `cc98.org` | `10.10.98.98` |
+| `zdbk.zju.edu.cn`（教务网） | `10.202.78.14` |
+| `zjusec.com` | `10.214.96.14` |
+
+硬编码一个 DNS 地址意味着：地址一旦变动、或者你在的网络段访问不到它，
+所有校内站点就全挂了，而且 Clash 的 DNS 缓存和系统是两套，会白白多一次转发 —— 慢。
+交给系统解析则完全复用系统已有的解析路径，最稳也最快。
+
+如果你确实需要手动指定（比如系统 DNS 被改过），`clash-base-campus.yaml`
+末尾留了注释掉的备选配置。
 
 网页上的「你在哪里用」选择器就是切这两个文件。也可以直接在链接里改
 `&base=/configs/clash-base-campus.yaml`。

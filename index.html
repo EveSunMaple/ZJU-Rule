@@ -1,510 +1,827 @@
 <!doctype html>
-<html>
+<html lang="zh-CN">
 <head>
-<meta charset='UTF-8'><meta name='viewport' content='width=device-width initial-scale=1'>
-<title>README</title><link href='https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext' rel='stylesheet' type='text/css' /><style type='text/css'>html {overflow-x: initial !important;}:root { --bg-color:#ffffff; --text-color:#333333; --select-text-bg-color:#B5D6FC; --select-text-font-color:auto; --monospace:"Lucida Console",Consolas,"Courier",monospace; }
-html { font-size: 14px; background-color: var(--bg-color); color: var(--text-color); font-family: "Helvetica Neue", Helvetica, Arial, sans-serif; -webkit-font-smoothing: antialiased; }
-body { margin: 0px; padding: 0px; height: auto; bottom: 0px; top: 0px; left: 0px; right: 0px; font-size: 1rem; line-height: 1.42857; overflow-x: hidden; background: inherit; tab-size: 4; }
-iframe { margin: auto; }
-a.url { word-break: break-all; }
-a:active, a:hover { outline: 0px; }
-.in-text-selection, ::selection { text-shadow: none; background: var(--select-text-bg-color); color: var(--select-text-font-color); }
-#write { margin: 0px auto; height: auto; width: inherit; word-break: normal; overflow-wrap: break-word; position: relative; white-space: normal; overflow-x: visible; padding-top: 40px; }
-#write.first-line-indent p { text-indent: 2em; }
-#write.first-line-indent li p, #write.first-line-indent p * { text-indent: 0px; }
-#write.first-line-indent li { margin-left: 2em; }
-.for-image #write { padding-left: 8px; padding-right: 8px; }
-body.typora-export { padding-left: 30px; padding-right: 30px; }
-.typora-export .footnote-line, .typora-export li, .typora-export p { white-space: pre-wrap; }
-@media screen and (max-width: 500px) {
-  body.typora-export { padding-left: 0px; padding-right: 0px; }
-  #write { padding-left: 20px; padding-right: 20px; }
-  .CodeMirror-sizer { margin-left: 0px !important; }
-  .CodeMirror-gutters { display: none !important; }
-}
-#write li > figure:last-child { margin-bottom: 0.5rem; }
-#write ol, #write ul { position: relative; }
-img { max-width: 100%; vertical-align: middle; }
-button, input, select, textarea { color: inherit; font: inherit; }
-input[type="checkbox"], input[type="radio"] { line-height: normal; padding: 0px; }
-*, ::after, ::before { box-sizing: border-box; }
-#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p, #write pre { width: inherit; }
-#write h1, #write h2, #write h3, #write h4, #write h5, #write h6, #write p { position: relative; }
-p { line-height: inherit; }
-h1, h2, h3, h4, h5, h6 { break-after: avoid-page; break-inside: avoid; orphans: 2; }
-p { orphans: 4; }
-h1 { font-size: 2rem; }
-h2 { font-size: 1.8rem; }
-h3 { font-size: 1.6rem; }
-h4 { font-size: 1.4rem; }
-h5 { font-size: 1.2rem; }
-h6 { font-size: 1rem; }
-.md-math-block, .md-rawblock, h1, h2, h3, h4, h5, h6, p { margin-top: 1rem; margin-bottom: 1rem; }
-.hidden { display: none; }
-.md-blockmeta { color: rgb(204, 204, 204); font-weight: 700; font-style: italic; }
-a { cursor: pointer; }
-sup.md-footnote { padding: 2px 4px; background-color: rgba(238, 238, 238, 0.7); color: rgb(85, 85, 85); border-radius: 4px; cursor: pointer; }
-sup.md-footnote a, sup.md-footnote a:hover { color: inherit; text-transform: inherit; text-decoration: inherit; }
-#write input[type="checkbox"] { cursor: pointer; width: inherit; height: inherit; }
-figure { overflow-x: auto; margin: 1.2em 0px; max-width: calc(100% + 16px); padding: 0px; }
-figure > table { margin: 0px !important; }
-tr { break-inside: avoid; break-after: auto; }
-thead { display: table-header-group; }
-table { border-collapse: collapse; border-spacing: 0px; width: 100%; overflow: auto; break-inside: auto; text-align: left; }
-table.md-table td { min-width: 32px; }
-.CodeMirror-gutters { border-right: 0px; background-color: inherit; }
-.CodeMirror-linenumber { user-select: none; }
-.CodeMirror { text-align: left; }
-.CodeMirror-placeholder { opacity: 0.3; }
-.CodeMirror pre { padding: 0px 4px; }
-.CodeMirror-lines { padding: 0px; }
-div.hr:focus { cursor: none; }
-#write pre { white-space: pre-wrap; }
-#write.fences-no-line-wrapping pre { white-space: pre; }
-#write pre.ty-contain-cm { white-space: normal; }
-.CodeMirror-gutters { margin-right: 4px; }
-.md-fences { font-size: 0.9rem; display: block; break-inside: avoid; text-align: left; overflow: visible; white-space: pre; background: inherit; position: relative !important; }
-.md-diagram-panel { width: 100%; margin-top: 10px; text-align: center; padding-top: 0px; padding-bottom: 8px; overflow-x: auto; }
-#write .md-fences.mock-cm { white-space: pre-wrap; }
-.md-fences.md-fences-with-lineno { padding-left: 0px; }
-#write.fences-no-line-wrapping .md-fences.mock-cm { white-space: pre; overflow-x: auto; }
-.md-fences.mock-cm.md-fences-with-lineno { padding-left: 8px; }
-.CodeMirror-line, twitterwidget { break-inside: avoid; }
-.footnotes { opacity: 0.8; font-size: 0.9rem; margin-top: 1em; margin-bottom: 1em; }
-.footnotes + .footnotes { margin-top: 0px; }
-.md-reset { margin: 0px; padding: 0px; border: 0px; outline: 0px; vertical-align: top; background: 0px 0px; text-decoration: none; text-shadow: none; float: none; position: static; width: auto; height: auto; white-space: nowrap; cursor: inherit; -webkit-tap-highlight-color: transparent; line-height: normal; font-weight: 400; text-align: left; box-sizing: content-box; direction: ltr; }
-li div { padding-top: 0px; }
-blockquote { margin: 1rem 0px; }
-li .mathjax-block, li p { margin: 0.5rem 0px; }
-li { margin: 0px; position: relative; }
-blockquote > :last-child { margin-bottom: 0px; }
-blockquote > :first-child, li > :first-child { margin-top: 0px; }
-.footnotes-area { color: rgb(136, 136, 136); margin-top: 0.714rem; padding-bottom: 0.143rem; white-space: normal; }
-#write .footnote-line { white-space: pre-wrap; }
-@media print {
-  body, html { border: 1px solid transparent; height: 99%; break-after: avoid; break-before: avoid; }
-  #write { margin-top: 0px; padding-top: 0px; border-color: transparent !important; }
-  .typora-export * { -webkit-print-color-adjust: exact; }
-  html.blink-to-pdf { font-size: 13px; }
-  .typora-export #write { padding-left: 32px; padding-right: 32px; padding-bottom: 0px; break-after: avoid; }
-  .typora-export #write::after { height: 0px; }
-}
-.footnote-line { margin-top: 0.714em; font-size: 0.7em; }
-a img, img a { cursor: pointer; }
-pre.md-meta-block { font-size: 0.8rem; min-height: 0.8rem; white-space: pre-wrap; background: rgb(204, 204, 204); display: block; overflow-x: hidden; }
-p > .md-image:only-child:not(.md-img-error) img, p > img:only-child { display: block; margin: auto; }
-p > .md-image:only-child { display: inline-block; width: 100%; }
-#write .MathJax_Display { margin: 0.8em 0px 0px; }
-.md-math-block { width: 100%; }
-.md-math-block:not(:empty)::after { display: none; }
-[contenteditable="true"]:active, [contenteditable="true"]:focus { outline: 0px; box-shadow: none; }
-.md-task-list-item { position: relative; list-style-type: none; }
-.task-list-item.md-task-list-item { padding-left: 0px; }
-.md-task-list-item > input { position: absolute; top: 0px; left: 0px; margin-left: -1.2em; margin-top: calc(1em - 10px); border: none; }
-.math { font-size: 1rem; }
-.md-toc { min-height: 3.58rem; position: relative; font-size: 0.9rem; border-radius: 10px; }
-.md-toc-content { position: relative; margin-left: 0px; }
-.md-toc-content::after, .md-toc::after { display: none; }
-.md-toc-item { display: block; color: rgb(65, 131, 196); }
-.md-toc-item a { text-decoration: none; }
-.md-toc-inner:hover { text-decoration: underline; }
-.md-toc-inner { display: inline-block; cursor: pointer; }
-.md-toc-h1 .md-toc-inner { margin-left: 0px; font-weight: 700; }
-.md-toc-h2 .md-toc-inner { margin-left: 2em; }
-.md-toc-h3 .md-toc-inner { margin-left: 4em; }
-.md-toc-h4 .md-toc-inner { margin-left: 6em; }
-.md-toc-h5 .md-toc-inner { margin-left: 8em; }
-.md-toc-h6 .md-toc-inner { margin-left: 10em; }
-@media screen and (max-width: 48em) {
-  .md-toc-h3 .md-toc-inner { margin-left: 3.5em; }
-  .md-toc-h4 .md-toc-inner { margin-left: 5em; }
-  .md-toc-h5 .md-toc-inner { margin-left: 6.5em; }
-  .md-toc-h6 .md-toc-inner { margin-left: 8em; }
-}
-a.md-toc-inner { font-size: inherit; font-style: inherit; font-weight: inherit; line-height: inherit; }
-.footnote-line a:not(.reversefootnote) { color: inherit; }
-.md-attr { display: none; }
-.md-fn-count::after { content: "."; }
-code, pre, samp, tt { font-family: var(--monospace); }
-kbd { margin: 0px 0.1em; padding: 0.1em 0.6em; font-size: 0.8em; color: rgb(36, 39, 41); background: rgb(255, 255, 255); border: 1px solid rgb(173, 179, 185); border-radius: 3px; box-shadow: rgba(12, 13, 14, 0.2) 0px 1px 0px, rgb(255, 255, 255) 0px 0px 0px 2px inset; white-space: nowrap; vertical-align: middle; }
-.md-comment { color: rgb(162, 127, 3); opacity: 0.8; font-family: var(--monospace); }
-code { text-align: left; vertical-align: initial; }
-a.md-print-anchor { white-space: pre !important; border-width: initial !important; border-style: none !important; border-color: initial !important; display: inline-block !important; position: absolute !important; width: 1px !important; right: 0px !important; outline: 0px !important; background: 0px 0px !important; text-decoration: initial !important; text-shadow: initial !important; }
-.md-inline-math .MathJax_SVG .noError { display: none !important; }
-.html-for-mac .inline-math-svg .MathJax_SVG { vertical-align: 0.2px; }
-.md-math-block .MathJax_SVG_Display { text-align: center; margin: 0px; position: relative; text-indent: 0px; max-width: none; max-height: none; min-height: 0px; min-width: 100%; width: auto; overflow-y: hidden; display: block !important; }
-.MathJax_SVG_Display, .md-inline-math .MathJax_SVG_Display { width: auto; margin: inherit; display: inline-block !important; }
-.MathJax_SVG .MJX-monospace { font-family: var(--monospace); }
-.MathJax_SVG .MJX-sans-serif { font-family: sans-serif; }
-.MathJax_SVG { display: inline; font-style: normal; font-weight: 400; line-height: normal; zoom: 90%; text-indent: 0px; text-align: left; text-transform: none; letter-spacing: normal; word-spacing: normal; overflow-wrap: normal; white-space: nowrap; float: none; direction: ltr; max-width: none; max-height: none; min-width: 0px; min-height: 0px; border: 0px; padding: 0px; margin: 0px; }
-.MathJax_SVG * { transition: none 0s ease 0s; }
-.MathJax_SVG_Display svg { vertical-align: middle !important; margin-bottom: 0px !important; margin-top: 0px !important; }
-.os-windows.monocolor-emoji .md-emoji { font-family: "Segoe UI Symbol", sans-serif; }
-.md-diagram-panel > svg { max-width: 100%; }
-[lang="mermaid"] svg, [lang="flow"] svg { max-width: 100%; height: auto; }
-[lang="mermaid"] .node text { font-size: 1rem; }
-table tr th { border-bottom: 0px; }
-video { max-width: 100%; display: block; margin: 0px auto; }
-iframe { max-width: 100%; width: 100%; border: none; }
-.highlight td, .highlight tr { border: 0px; }
-svg[id^="mermaidChart"] { line-height: 1em; }
-mark { background: rgb(255, 255, 0); color: rgb(0, 0, 0); }
-.md-html-inline .md-plain, .md-html-inline strong, mark .md-inline-math, mark strong { color: inherit; }
-mark .md-meta { color: rgb(0, 0, 0); opacity: 0.3 !important; }
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>ZJU Rule · 订阅转换</title>
+<meta name="description" content="浙江大学 ZJU Rule 分流规则订阅转换服务，可自定义分流规则">
+<style>
+  :root {
+    --bg: #0f1720;
+    --panel: #17212b;
+    --panel-2: #1e2b38;
+    --panel-3: #24323f;
+    --border: #2a3a4a;
+    --text: #e6edf3;
+    --muted: #8ba0b3;
+    --accent: #4aa3ff;
+    --accent-2: #2b7fd4;
+    --ok: #3fb950;
+    --warn: #d29922;
+    --err: #f85149;
+    --radius: 10px;
+  }
+  * { box-sizing: border-box; }
+  html, body { margin: 0; padding: 0; }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font: 15px/1.6 -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+      "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+    padding: 0 16px 64px;
+  }
+  .wrap { max-width: 880px; margin: 0 auto; }
 
+  header { padding: 40px 0 24px; }
+  h1 { margin: 0 0 6px; font-size: 26px; letter-spacing: .2px; }
+  h1 .tag {
+    font-size: 12px; font-weight: 600; vertical-align: middle;
+    background: var(--accent-2); color: #fff; border-radius: 999px;
+    padding: 3px 10px; margin-left: 10px;
+  }
+  header p { margin: 0; color: var(--muted); font-size: 14px; }
+  header a { color: var(--accent); text-decoration: none; }
+  header a:hover { text-decoration: underline; }
 
-:root {
-    --side-bar-bg-color: #fafafa;
-    --control-text-color: #777;
-}
+  .card {
+    background: var(--panel);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 20px;
+    margin-bottom: 16px;
+  }
+  .card > h2 {
+    margin: 0 0 14px; font-size: 14px; font-weight: 600;
+    color: var(--muted); text-transform: uppercase; letter-spacing: .08em;
+    display: flex; align-items: center; gap: 10px; flex-wrap: wrap;
+  }
+  .badge {
+    font-size: 11px; font-weight: 600; letter-spacing: 0; text-transform: none;
+    background: rgba(74,163,255,.16); color: var(--accent);
+    border: 1px solid rgba(74,163,255,.35);
+    border-radius: 999px; padding: 2px 9px;
+  }
 
-@include-when-export url(https://fonts.loli.net/css?family=Open+Sans:400italic,700italic,700,400&subset=latin,latin-ext);
+  label { display: block; font-size: 13px; color: var(--muted); margin-bottom: 6px; }
+  textarea, input[type="text"], select {
+    width: 100%; padding: 10px 12px;
+    background: var(--panel-2); color: var(--text);
+    border: 1px solid var(--border); border-radius: 8px;
+    font-size: 14px; font-family: inherit;
+    transition: border-color .15s;
+  }
+  textarea { min-height: 92px; resize: vertical; font-family: ui-monospace, SFMono-Regular, Menlo, monospace; font-size: 13px; }
+  textarea:focus, input:focus, select:focus { outline: none; border-color: var(--accent); }
+  .hint { font-size: 12px; color: var(--muted); margin-top: 6px; }
 
-html {
-    font-size: 16px;
-}
+  .grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+  @media (max-width: 640px) { .grid { grid-template-columns: 1fr; } }
 
-body {
-    font-family: "Open Sans","Clear Sans","Helvetica Neue",Helvetica,Arial,sans-serif;
-    color: rgb(51, 51, 51);
-    line-height: 1.6;
-}
+  .field { margin-bottom: 16px; }
+  .field:last-child { margin-bottom: 0; }
 
-#write {
-    max-width: 860px;
-  	margin: 0 auto;
-  	padding: 30px;
-    padding-bottom: 100px;
-}
-#write > ul:first-child,
-#write > ol:first-child{
-    margin-top: 30px;
-}
+  .checks { display: flex; flex-wrap: wrap; gap: 8px 18px; margin-top: 4px; }
+  .check { display: flex; align-items: center; gap: 7px; font-size: 13px; color: var(--text); cursor: pointer; }
+  .check input { accent-color: var(--accent); width: 15px; height: 15px; cursor: pointer; }
 
-a {
-    color: #4183C4;
-}
-h1,
-h2,
-h3,
-h4,
-h5,
-h6 {
-    position: relative;
-    margin-top: 1rem;
-    margin-bottom: 1rem;
-    font-weight: bold;
-    line-height: 1.4;
-    cursor: text;
-}
-h1:hover a.anchor,
-h2:hover a.anchor,
-h3:hover a.anchor,
-h4:hover a.anchor,
-h5:hover a.anchor,
-h6:hover a.anchor {
-    text-decoration: none;
-}
-h1 tt,
-h1 code {
-    font-size: inherit;
-}
-h2 tt,
-h2 code {
-    font-size: inherit;
-}
-h3 tt,
-h3 code {
-    font-size: inherit;
-}
-h4 tt,
-h4 code {
-    font-size: inherit;
-}
-h5 tt,
-h5 code {
-    font-size: inherit;
-}
-h6 tt,
-h6 code {
-    font-size: inherit;
-}
-h1 {
-    padding-bottom: .3em;
-    font-size: 2.25em;
-    line-height: 1.2;
-    border-bottom: 1px solid #eee;
-}
-h2 {
-   padding-bottom: .3em;
-    font-size: 1.75em;
-    line-height: 1.225;
-    border-bottom: 1px solid #eee;
-}
-h3 {
-    font-size: 1.5em;
-    line-height: 1.43;
-}
-h4 {
-    font-size: 1.25em;
-}
-h5 {
-    font-size: 1em;
-}
-h6 {
-   font-size: 1em;
-    color: #777;
-}
-p,
-blockquote,
-ul,
-ol,
-dl,
-table{
-    margin: 0.8em 0;
-}
-li>ol,
-li>ul {
-    margin: 0 0;
-}
-hr {
-    height: 2px;
-    padding: 0;
-    margin: 16px 0;
-    background-color: #e7e7e7;
-    border: 0 none;
-    overflow: hidden;
-    box-sizing: content-box;
-}
+  button {
+    font: inherit; font-size: 14px; font-weight: 600;
+    padding: 11px 20px; border-radius: 8px; border: 1px solid transparent;
+    background: var(--accent); color: #fff; cursor: pointer;
+    transition: background .15s;
+  }
+  button:hover:not(:disabled) { background: var(--accent-2); }
+  button:disabled { opacity: .5; cursor: not-allowed; }
+  button.ghost { background: transparent; border-color: var(--border); color: var(--text); font-weight: 500; }
+  button.ghost:hover:not(:disabled) { background: var(--panel-2); }
+  button.small { padding: 7px 13px; font-size: 13px; }
 
-li p.first {
-    display: inline-block;
-}
-ul,
-ol {
-    padding-left: 30px;
-}
-ul:first-child,
-ol:first-child {
-    margin-top: 0;
-}
-ul:last-child,
-ol:last-child {
-    margin-bottom: 0;
-}
-blockquote {
-    border-left: 4px solid #dfe2e5;
-    padding: 0 15px;
-    color: #777777;
-}
-blockquote blockquote {
-    padding-right: 0;
-}
-table {
-    padding: 0;
-    word-break: initial;
-}
-table tr {
-    border-top: 1px solid #dfe2e5;
-    margin: 0;
-    padding: 0;
-}
-table tr:nth-child(2n),
-thead {
-    background-color: #f8f8f8;
-}
-table tr th {
-    font-weight: bold;
-    border: 1px solid #dfe2e5;
-    border-bottom: 0;
-    margin: 0;
-    padding: 6px 13px;
-}
-table tr td {
-    border: 1px solid #dfe2e5;
-    margin: 0;
-    padding: 6px 13px;
-}
-table tr th:first-child,
-table tr td:first-child {
-    margin-top: 0;
-}
-table tr th:last-child,
-table tr td:last-child {
-    margin-bottom: 0;
-}
+  .row { display: flex; gap: 10px; align-items: center; flex-wrap: wrap; }
 
-.CodeMirror-lines {
-    padding-left: 4px;
-}
+  /* --- 规则设置 --- */
+  .presets { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 18px; }
+  .presets button {
+    background: var(--panel-2); color: var(--text); border: 1px solid var(--border);
+    font-weight: 500; font-size: 13px; padding: 8px 14px;
+  }
+  .presets button:hover { background: var(--panel-3); }
+  .presets button.active { background: var(--accent); border-color: var(--accent); color: #fff; }
 
-.code-tooltip {
-    box-shadow: 0 1px 1px 0 rgba(0,28,36,.3);
-    border-top: 1px solid #eef2f2;
-}
+  .rsgroup { border-top: 1px solid var(--border); padding: 12px 0; }
+  .rsgroup:first-child { border-top: none; }
+  .rsgroup > .rsgroup-title {
+    font-size: 13px; font-weight: 600; margin-bottom: 8px;
+    display: flex; align-items: center; gap: 8px;
+  }
+  .rsitems { display: flex; flex-wrap: wrap; gap: 6px 16px; }
+  .rsitem { display: flex; align-items: center; gap: 6px; font-size: 12.5px; cursor: pointer; color: var(--text); }
+  .rsitem input { accent-color: var(--accent); width: 14px; height: 14px; cursor: pointer; }
+  .rsitem .heavy { color: var(--warn); font-size: 11px; }
 
-.md-fences,
-code,
-tt {
-    border: 1px solid #e7eaed;
-    background-color: #f8f8f8;
-    border-radius: 3px;
-    padding: 0;
-    padding: 2px 4px 0px 4px;
-    font-size: 0.9em;
-}
+  .crow { display: grid; grid-template-columns: 1fr 150px 34px; gap: 8px; margin-bottom: 8px; align-items: center; }
+  @media (max-width: 640px) { .crow { grid-template-columns: 1fr; } }
+  .crow button {
+    background: transparent; border: 1px solid var(--border); color: var(--muted);
+    padding: 0; height: 38px; font-size: 16px; line-height: 1; font-weight: 400;
+  }
+  .crow button:hover { background: rgba(248,81,73,.14); color: var(--err); border-color: rgba(248,81,73,.4); }
+  .empty { color: var(--muted); font-size: 13px; padding: 6px 0; }
 
-code {
-    background-color: #f3f4f4;
-    padding: 0 2px 0 2px;
-}
+  .result { display: none; }
+  .result.show { display: block; }
+  .out {
+    width: 100%; padding: 12px; background: var(--panel-2);
+    border: 1px solid var(--border); border-radius: 8px;
+    font-family: ui-monospace, SFMono-Regular, Menlo, monospace;
+    font-size: 12.5px; word-break: break-all; color: #9fd3ff;
+    max-height: 150px; overflow: auto; white-space: pre-wrap;
+  }
+  .meta { font-size: 12.5px; color: var(--muted); margin-top: 10px; }
+  .meta b { color: var(--text); font-weight: 600; }
 
-.md-fences {
-    margin-bottom: 15px;
-    margin-top: 15px;
-    padding-top: 8px;
-    padding-bottom: 6px;
-}
+  .banner {
+    border-radius: 8px; padding: 12px 14px; font-size: 13px;
+    margin-bottom: 16px; border: 1px solid; display: none;
+    white-space: pre-wrap;
+  }
+  .banner.show { display: block; }
+  .banner.err { background: rgba(248,81,73,.1); border-color: rgba(248,81,73,.4); color: #ffb4ae; }
+  .banner.ok  { background: rgba(63,185,80,.1); border-color: rgba(63,185,80,.4); color: #8ee79b; }
+  .banner.warn{ background: rgba(210,153,34,.1); border-color: rgba(210,153,34,.4); color: #f0cf7f; }
 
+  details summary { cursor: pointer; color: var(--muted); font-size: 13px; user-select: none; }
+  details summary:hover { color: var(--text); }
+  details[open] > summary { margin-bottom: 14px; }
 
-.md-task-list-item > input {
-  margin-left: -1.3em;
-}
-
-@media print {
-    html {
-        font-size: 13px;
-    }
-    table,
-    pre {
-        page-break-inside: avoid;
-    }
-    pre {
-        word-wrap: break-word;
-    }
-}
-
-.md-fences {
-	background-color: #f8f8f8;
-}
-#write pre.md-meta-block {
-	padding: 1rem;
-    font-size: 85%;
-    line-height: 1.45;
-    background-color: #f7f7f7;
-    border: 0;
-    border-radius: 3px;
-    color: #777777;
-    margin-top: 0 !important;
-}
-
-.mathjax-block>.code-tooltip {
-	bottom: .375rem;
-}
-
-.md-mathjax-midline {
-    background: #fafafa;
-}
-
-#write>h3.md-focus:before{
-	left: -1.5625rem;
-	top: .375rem;
-}
-#write>h4.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-#write>h5.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-#write>h6.md-focus:before{
-	left: -1.5625rem;
-	top: .285714286rem;
-}
-.md-image>.md-meta {
-    /*border: 1px solid #ddd;*/
-    border-radius: 3px;
-    padding: 2px 0px 0px 4px;
-    font-size: 0.9em;
-    color: inherit;
-}
-
-.md-tag {
-    color: #a7a7a7;
-    opacity: 1;
-}
-
-.md-toc { 
-    margin-top:20px;
-    padding-bottom:20px;
-}
-
-.sidebar-tabs {
-    border-bottom: none;
-}
-
-#typora-quick-open {
-    border: 1px solid #ddd;
-    background-color: #f8f8f8;
-}
-
-#typora-quick-open-item {
-    background-color: #FAFAFA;
-    border-color: #FEFEFE #e5e5e5 #e5e5e5 #eee;
-    border-style: solid;
-    border-width: 1px;
-}
-
-/** focus mode */
-.on-focus-mode blockquote {
-    border-left-color: rgba(85, 85, 85, 0.12);
-}
-
-header, .context-menu, .megamenu-content, footer{
-    font-family: "Segoe UI", "Arial", sans-serif;
-}
-
-.file-node-content:hover .file-node-icon,
-.file-node-content:hover .file-node-open-state{
-    visibility: visible;
-}
-
-.mac-seamless-mode #typora-sidebar {
-    background-color: #fafafa;
-    background-color: var(--side-bar-bg-color);
-}
-
-.md-lang {
-    color: #b4654d;
-}
-
-.html-for-mac .context-menu {
-    --item-hover-bg-color: #E6F0FE;
-}
-
-#md-notification .btn {
-    border: 0;
-}
-
-.dropdown-menu .divider {
-    border-color: #e5e5e5;
-}
-
-.ty-preferences .window-content {
-    background-color: #fafafa;
-}
-
-.ty-preferences .nav-group-item.active {
-    color: white;
-    background: #999;
-}
-
- .typora-export li, .typora-export p, .typora-export,  .footnote-line {white-space: normal;} 
+  pre.preview {
+    background: #0b1219; border: 1px solid var(--border); border-radius: 8px;
+    padding: 12px; font-size: 12px; max-height: 340px; overflow: auto;
+    white-space: pre; margin: 0;
+  }
+  .qr { margin-top: 12px; display: flex; justify-content: center; background: #fff; padding: 10px; border-radius: 8px; width: fit-content; }
+  .qr img, .qr canvas { display: block; }
+  footer { color: var(--muted); font-size: 12.5px; text-align: center; padding: 24px 0; }
+  footer a { color: var(--accent); }
+  code.k { background: var(--panel-2); padding: 1px 5px; border-radius: 4px; font-size: 12px; font-family: ui-monospace, Menlo, monospace; }
 </style>
 </head>
-<body class='typora-export os-windows' >
-<div  id='write'  class = 'is-node'><h1><a name="ssr去广告规则gfwlist规则clash规则碎片" class="md-header-anchor"></a><span>SSR去广告规则/GFWList规则/Clash规则碎片</span></h1><p><a href='https://creativecommons.org/licenses/by-sa/4.0/deed.zh'><img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png" referrerpolicy="no-referrer"></a></p><ul><li><span>项目基于CC-BY-SA-4.0协议发布</span></li><li><span>仅推荐未root的安卓手机使用。</span></li><li><span>Telegram频道订阅地址：</span><strong><a href='https://t.me/ACL4SSR' target='_blank' class='url'>https://t.me/ACL4SSR</a></strong></li><li><span>有问题可以发issue或者私聊：</span><strong><a href='https://t.me/leosam2048' target='_blank' class='url'>https://t.me/leosam2048</a></strong></li><li><a href='https://github.com/ACL4SSR/ACL4SSR/wiki/关于中国的互联网'><span>关于中国的互联网</span></a></li></ul><h1><a name="root手机推荐" class="md-header-anchor"></a><span>Root手机推荐：</span></h1><ul><li><span>1.自带去广告的VIA浏览器 </span><a href='http://www.coolapk.com/apk/mark.via' target='_blank' class='url'>http://www.coolapk.com/apk/mark.via</a></li><li><span>2.HOSTS 广告快走中国版 </span><a href='http://www.coolapk.com/apk/mark.via' target='_blank' class='url'>http://www.coolapk.com/apk/mark.via</a></li><li><span>3.HOSTS 广告快走开AdAway </span><a href='http://www.coolapk.com/apk/org.adaway' target='_blank' class='url'>http://www.coolapk.com/apk/org.adaway</a></li><li><a href='https://github.com/neko-dev/neohosts' target='_blank' class='url'>https://github.com/neko-dev/neohosts</a></li><li><span>Google Hosts 请移步 </span><a href='https://github.com/googlehosts/hosts' target='_blank' class='url'>https://github.com/googlehosts/hosts</a></li></ul><h1><a name="版本解释" class="md-header-anchor"></a><span>版本解释</span></h1><h2><a name="ssr直接可用的规则" class="md-header-anchor"></a><span>SSR直接可用的规则</span></h2><figure><table><thead><tr><th><span>文件</span></th><th><span>默认</span></th><th><span>去广告</span></th><th><span>局域网</span></th><th><span>国内IP段</span></th><th><span>国内域名</span></th><th><span>国外</span></th></tr></thead><tbody><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/banAD.acl'><span>banAD.acl</span></a></td><td><span>代理</span></td><td><span>是</span></td><td><span>直连</span></td><td><span>有-直连</span></td><td><span>常用域名-直连</span></td><td><span>代理-常用国外域名增强</span></td></tr><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/onlybanAD.acl'><span>onlybanAD.acl</span></a></td><td><span>代理</span></td><td><span>是</span></td><td><span>直连</span></td><td><span>无</span></td><td><span>无</span></td><td><span>代理-常用国外域名增强</span></td></tr><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/nobanAD.acl'><span>nobanAD.acl</span></a></td><td><span>代理</span></td><td><span>否</span></td><td><span>直连</span></td><td><span>有-直连</span></td><td><span>常用域名-直连</span></td><td><span>全局代理</span></td></tr><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/backcn-banAD.acl'><span>backcn-banAD.acl</span></a></td><td><span>代理</span></td><td><span>是</span></td><td><span>直连</span></td><td><span>有-代理</span></td><td><span>无</span></td><td><span>直连-gfwlist列表</span></td></tr><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/gfwlist-banAD.acl'><span>gfwlist-banAD.acl</span></a></td><td><span>直连</span></td><td><span>是</span></td><td><span>直连</span></td><td><span>无</span></td><td><span>无</span></td><td><span>代理-gfwlist列表</span></td></tr><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/fullgfwlist.acl '><span>fullgfwlist.acl</span></a></td><td><span>直连</span></td><td><span>否</span></td><td><span>直连</span></td><td><span>无</span></td><td><span>无</span></td><td><span>代理-gfwlist列表</span></td></tr><tr><td><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/gfwlist-user.rule'><span>gfwlist-user.rule</span></a></td><td><span>直连</span></td><td><span>是</span></td><td><span>直连</span></td><td><span>无</span></td><td><span>无</span></td><td><span>代理-gfwlist列表</span></td></tr></tbody></table></figure><h2><a name="clash规则碎片" class="md-header-anchor"></a><span>Clash规则碎片</span></h2><p><span>主要文件在clash文件夹下，只是一些规则碎片，可以配合一些订阅转换进行使用。</span></p><figure><table><thead><tr><th><span>文件</span></th><th><span>类型</span></th><th><span>解释</span></th></tr></thead><tbody><tr><td><span>BanAD.list</span></td><td><span>规则碎片-去广告</span></td><td><span>只包含常见广告关键字、广告联盟。无副作用，放心使用</span></td></tr><tr><td><span>BanProgramAD.list</span></td><td><span>规则碎片-去广告</span></td><td><span>包含常用应用的各种去广告规则。可能有轻微副作用，可放心使用。（如果网站功能和广告冲突，会删掉去广告规则）</span></td></tr><tr><td><span>ChinaDomain.list</span></td><td><span>规则碎片-直连</span></td><td><span>国内常见域名、直连CDN等。（很全，常用网址都有）</span></td></tr><tr><td><span>ChinaCompanyIp.list</span></td><td><span>规则碎片-直连</span></td><td><span>国内BAT公司及云服务厂商的IP段。所有在该云服务上的网站都可以直连。比如你网站在阿里云香港都可以直连。</span></td></tr><tr><td><span>ChinaIp.list</span></td><td><span>规则碎片-直连</span></td><td><span>IPIP的国内地址段。比GeoIp更好。电脑性能好，可以引入</span></td></tr><tr><td><span>Apple.list</span></td><td><span>规则碎片-直连</span></td><td><span>苹果公司的所有域名</span></td></tr><tr><td><span>ProxyGFWlist.list</span></td><td><span>规则碎片-代理</span></td><td><span>GFW的全量列表</span></td></tr><tr><td><span>ProxyLite.list</span></td><td><span>规则碎片-代理</span></td><td><span>比较精简的代理列表，包含常用的，以及被污染的域名</span></td></tr><tr><td><span>GeneralClashConfig.yml</span></td><td><span>clash配置文件</span></td><td><span>放行一堆国内的常用域名，配合系统代理更牛逼。 配置很全，自带中文注释。可以自行使用</span></td></tr><tr><td><span>pref.ini</span></td><td><span>subconverter配置文件</span></td><td><span>更改了一些基础配置，将规则变成ACL4SSR</span></td></tr></tbody></table></figure><h1><a name="安卓-ssr-去广告acl规则" class="md-header-anchor"></a><span>安卓 SSR 去广告ACL规则</span></h1><ul><li><span>屏蔽小米手机和魅族flyme rom系统广告</span></li><li><span>国内网站均直接连接</span></li><li><span>屏蔽常用视频网站广告</span></li><li><span>屏蔽常用网站广告、其他流媒体网站广告</span></li><li><span>屏蔽部分应用程序开屏广告</span></li><li><span>屏蔽部分运营商劫持网页弹出的漂浮球广告、流量统计</span></li><li><span>拦截常用应用程序的隐私跟踪、行为分析、数据统计</span></li></ul><h1><a name="♻️-ssssr-acl-files-download" class="md-header-anchor"></a><span>♻️ SS/SSR ACL Files Download：</span></h1><ul><li><span>ACL更新地址（</span><strong><span>白名单</span></strong><span>）：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/banAD.acl' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/banAD.acl</a></li><li><span>ACL更新地址（</span><strong><span>黑名单</span></strong><span>）：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/gfwlist-banAD.acl' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/gfwlist-banAD.acl</a></li><li><span>ACL更新地址（</span><strong><span>全局</span></strong><span>）：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/onlybanAD.acl' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/onlybanAD.acl</a></li><li><span>ACL更新地址（</span><strong><span>仅GFWList</span></strong><span>）：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/fullgfwlist.acl' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/fullgfwlist.acl</a><span> （原版SS</span><strong><span>能且仅能</span></strong><span>使用此规则）</span></li><li><span>ACL更新地址（</span><strong><span>国内代理</span></strong><span>）：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/backcn-banAD.acl' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/backcn-banAD.acl</a></li><li><span>ACL更新地址（</span><strong><span>白名单，无去广告</span></strong><span>）：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/nobanAD.acl' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/nobanAD.acl</a></li><li><span>SSR C# GFWList user.rule ：</span><a href='https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/gfwlist-user.rule' target='_blank' class='url'>https://raw.githubusercontent.com/ACL4SSR/ACL4SSR/master/gfwlist-user.rule</a></li></ul><ul><li><span>SS：</span><a href='https://github.com/shadowsocks' target='_blank' class='url'>https://github.com/shadowsocks</a></li><li><span>SSR-WIN：</span><a href='https://github.com/shadowsocksr/shadowsocksr-csharp/releases' target='_blank' class='url'>https://github.com/shadowsocksr/shadowsocksr-csharp/releases</a></li><li><span>SSR-安卓：</span><a href='https://github.com/shadowsocksr/shadowsocksr-android/releases' target='_blank' class='url'>https://github.com/shadowsocksr/shadowsocksr-android/releases</a></li></ul><h1><a name="♻️-surgeshadowrocket-config-file-download" class="md-header-anchor"></a><span>♻️ Surge/Shadowrocket Config File Download：</span></h1><ul><li><span>请到相关项目页面根据说明配置 </span><a href='https://github.com/lhie1/Rules' target='_blank' class='url'>https://github.com/lhie1/Rules</a></li></ul><p><span>📋 教程 / 说明：</span></p><ul><li><span>打开SSR-&gt;路由-&gt;自定义acl文件-&gt;输入下载地址-&gt;更新</span></li><li><span>再次更新，点击软件页面底部的更新即可</span></li></ul><h1><a name="注" class="md-header-anchor"></a><span>注：</span></h1><ul><li><span>参照lhie1大神的surge规则改编，致谢!! </span><a href='https://github.com/lhie1/Surge' target='_blank' class='url'>https://github.com/lhie1/Surge</a></li><li><span>浏览器内部广告太多了，单凭几百条规则可能过滤不过来。少许遗漏，请谅解</span></li><li><span>有问题请发issue,说明状况和所用规则。</span></li><li><span>temp文件夹为历史存档 要找以前的版本可以下那个</span>
-<span>	</span></li></ul><h1><a name="license" class="md-header-anchor"></a><span>License</span><span>		</span></h1><p><a href='https://creativecommons.org/licenses/by-sa/4.0/deed.zh'><img src="https://licensebuttons.net/l/by-sa/4.0/88x31.png" referrerpolicy="no-referrer"></a></p><ul><li><span>CC-BY-SA-4.0</span></li></ul></div>
+<body>
+<div class="wrap">
+
+  <header>
+    <h1>ZJU Rule<span class="tag">订阅转换</span></h1>
+    <p>
+      浙江大学分流规则 · 把机场订阅链接转换成带 ZJU 规则的 Clash 订阅 ·
+      <a href="https://github.com/lizhist/ZJU-Rule" target="_blank" rel="noopener">GitHub</a>
+    </p>
+  </header>
+
+  <div id="banner-err" class="banner err"></div>
+  <div id="banner-ok" class="banner ok"></div>
+  <div id="banner-warn" class="banner warn"></div>
+
+  <div class="card">
+    <h2>1 · 订阅链接</h2>
+    <div class="field">
+      <label for="sub">机场订阅链接（支持多个，用 <code class="k">|</code> 分隔）</label>
+      <textarea id="sub" spellcheck="false" placeholder="https://example.com/api/v1/client/subscribe?token=xxxxxx"></textarea>
+      <div class="hint">支持 SS / SSR / V2Ray / VLESS / Trojan / Hysteria2 / TUIC 等订阅，base64 订阅、Clash 配置、明文链接列表都能解析。</div>
+    </div>
+  </div>
+
+  <div class="card">
+    <h2>2 · 转换选项</h2>
+    <div class="grid">
+      <div class="field">
+        <label for="target">客户端</label>
+        <select id="target"></select>
+      </div>
+      <div class="field">
+        <label for="config">规则配置</label>
+        <select id="config"></select>
+      </div>
+    </div>
+
+    <details>
+      <summary>高级选项</summary>
+      <div class="field">
+        <label>功能开关</label>
+        <div class="checks">
+          <label class="check"><input type="checkbox" id="udp" checked> UDP 转发</label>
+          <label class="check"><input type="checkbox" id="tfo"> TCP Fast Open</label>
+          <label class="check"><input type="checkbox" id="scv" checked> 跳过证书验证</label>
+          <label class="check"><input type="checkbox" id="emoji" checked> Emoji 节点名</label>
+          <label class="check"><input type="checkbox" id="append_type"> 节点名追加协议</label>
+          <label class="check"><input type="checkbox" id="sort"> 节点排序</label>
+        </div>
+      </div>
+
+      <div class="grid">
+        <div class="field">
+          <label for="exclude">排除节点（正则）</label>
+          <input type="text" id="exclude" placeholder="(到期|剩余流量|官网)">
+        </div>
+        <div class="field">
+          <label for="include">仅包含节点（正则）</label>
+          <input type="text" id="include" placeholder="留空表示全部">
+        </div>
+      </div>
+
+      <div class="field">
+        <label for="backend">自定义转换后端（一般不用填）</label>
+        <input type="text" id="backend" spellcheck="false" placeholder="留空即可">
+        <div class="hint" id="backend-hint"></div>
+      </div>
+    </details>
+  </div>
+
+  <!-- ============ 规则设置 ============ -->
+  <div class="card">
+    <h2>3 · 规则设置 <span class="badge">同学改这里</span></h2>
+
+    <div class="presets" id="presets">
+      <button data-preset="full" class="active">全功能</button>
+      <button data-preset="noad">关闭广告拦截</button>
+      <button data-preset="minimal">极简</button>
+    </div>
+    <div class="hint" style="margin-top:-8px;margin-bottom:16px">
+      预设只是帮你快速勾选，下面还可以逐项调整。所有选择都会写进生成的订阅链接里。
+    </div>
+
+    <details open>
+      <summary>启用哪些规则集 <span id="rs-count" class="hint" style="display:inline"></span></summary>
+      <div id="rulesets"><div class="empty">正在加载规则清单…</div></div>
+    </details>
+
+    <details style="margin-top:14px">
+      <summary>自定义规则 <span id="custom-count" class="hint" style="display:inline"></span></summary>
+      <div id="custom-list"></div>
+      <button class="ghost small" id="add-custom" style="margin-top:6px">+ 添加一条规则</button>
+      <div class="hint">
+        直接填域名即可（自动按 <code class="k">DOMAIN-SUFFIX</code> 处理，例如
+        <code class="k">my-lab.zju.edu.cn</code>）；
+        也可以填完整规则，例如 <code class="k">IP-CIDR,10.20.0.0/16</code> 或
+        <code class="k">DOMAIN-KEYWORD,steam</code>。
+        自定义规则优先级最高，会排在所有内置规则前面。
+      </div>
+    </details>
+  </div>
+
+  <div class="card">
+    <h2>4 · 生成</h2>
+    <div class="row">
+      <button id="go">生成订阅链接</button>
+      <button id="preview" class="ghost">预览配置</button>
+      <button id="reset" class="ghost">重置全部设置</button>
+    </div>
+  </div>
+
+  <div class="card result" id="result">
+    <h2>订阅链接</h2>
+    <div class="out" id="out"></div>
+    <div class="meta" id="meta"></div>
+    <div class="row" style="margin-top:14px">
+      <button id="copy">复制链接</button>
+      <button id="open" class="ghost">在新标签打开</button>
+      <button id="qrbtn" class="ghost">显示二维码</button>
+    </div>
+    <div class="qr" id="qrbox" style="display:none"></div>
+    <div class="hint" id="device-hint" style="margin-top:14px"></div>
+  </div>
+
+  <div class="card" id="preview-card" style="display:none">
+    <h2>配置预览</h2>
+    <pre class="preview" id="preview-out"></pre>
+  </div>
+
+  <footer>
+    ZJU Rule · 基于 <a href="https://github.com/ACL4SSR/ACL4SSR" target="_blank" rel="noopener">ACL4SSR</a>
+    与内置转换引擎 · CC-BY-SA-4.0
+  </footer>
+</div>
+
+<script src="/zju-config.js"></script>
+<script>
+(() => {
+  'use strict';
+
+  const BUILTIN_TARGETS = [
+    ['clash',  'Clash / Mihomo（推荐）'],
+    ['clashr', 'ClashR（支持 SSR）'],
+    ['mixed',  '通用 base64 节点列表'],
+    ['v2ray',  'V2Ray / v2rayN'],
+    ['ss',     'Shadowsocks'],
+  ];
+
+  const EXTERNAL_TARGETS = [
+    ['surge',     'Surge 4+'],
+    ['surfboard', 'Surfboard'],
+    ['quanx',     'Quantumult X'],
+    ['loon',      'Loon'],
+    ['mellow',    'Mellow'],
+    ['singbox',   'sing-box'],
+    ['sssub',     'Shadowsocks Android'],
+  ];
+
+  const $ = (id) => document.getElementById(id);
+  const STORE_KEY = 'zju-rule-options-v2';
+
+  let state = {
+    origin: location.origin,
+    engineAvailable: true,
+    subconverterAvailable: false,
+    profiles: [],
+  };
+
+  let catalog = null;          // 规则集清单
+  let disabledSets = new Set(); // 被关掉的规则集 source
+  let customRules = [];         // [{rule, policy}]
+
+  /* ==================== 初始化 ==================== */
+
+  function fillTargets() {
+    const list = [...BUILTIN_TARGETS];
+    if (state.subconverterAvailable) list.push(...EXTERNAL_TARGETS);
+    $('target').innerHTML = list
+      .map(([v, label]) => `<option value="${v}">${label}</option>`)
+      .join('');
+  }
+
+  function fillProfiles() {
+    const select = $('config');
+    if (!state.profiles || !state.profiles.length) {
+      select.innerHTML = '<option value="/Clash/config/ZJU.ini">ZJU.ini（内置）</option>';
+      return;
+    }
+    select.innerHTML = state.profiles
+      .map((p) => `<option value="${p.path}">${p.name}${p.zju ? '  ★ ZJU 推荐' : ''}</option>`)
+      .join('');
+  }
+
+  function loadOptions() {
+    let saved = {};
+    try { saved = JSON.parse(localStorage.getItem(STORE_KEY) || '{}'); } catch (e) {}
+
+    for (const key of ['udp', 'tfo', 'scv', 'emoji', 'append_type', 'sort']) {
+      if (typeof saved[key] === 'boolean') $(key).checked = saved[key];
+    }
+    if (saved.target) $('target').value = saved.target;
+    if (saved.config) {
+      const opt = Array.from($('config').options).find((o) => o.value === saved.config);
+      if (opt) $('config').value = saved.config;
+    }
+    if (saved.exclude) $('exclude').value = saved.exclude;
+    if (saved.include) $('include').value = saved.include;
+    if (saved.backend) $('backend').value = saved.backend;
+    if (saved.sub) $('sub').value = saved.sub;
+    if (Array.isArray(saved.customRules)) customRules = saved.customRules;
+    if (Array.isArray(saved.disabledSets)) disabledSets = new Set(saved.disabledSets);
+    if (saved.preset) setActivePreset(saved.preset, false);
+  }
+
+  function saveOptions() {
+    const data = {
+      target: $('target').value,
+      config: $('config').value,
+      exclude: $('exclude').value,
+      include: $('include').value,
+      backend: $('backend').value,
+      sub: $('sub').value,
+      customRules: customRules.filter((r) => r.rule && r.rule.trim()),
+      disabledSets: [...disabledSets],
+      preset: document.querySelector('#presets button.active')?.dataset.preset || 'custom',
+    };
+    for (const key of ['udp', 'tfo', 'scv', 'emoji', 'append_type', 'sort']) {
+      data[key] = $(key).checked;
+    }
+    try { localStorage.setItem(STORE_KEY, JSON.stringify(data)); } catch (e) {}
+  }
+
+  async function discoverConfig() {
+    let data = window.__ZJU_CONFIG__;
+    if (!data) {
+      try {
+        const res = await fetch('/api/config', { cache: 'no-store' });
+        if (res.ok) data = await res.json();
+      } catch (e) { /* ignore */ }
+    }
+    if (data) state = Object.assign({}, state, data);
+
+    // 不注入 origin：始终以浏览器实际访问的地址为准
+    state.origin = location.origin;
+
+    fillTargets();
+    fillProfiles();
+    loadOptions();
+
+    if (state.subconverterAvailable) {
+      $('backend-hint').textContent =
+        '本站内置转换引擎，无需后端。Surge / Quantumult X 等格式会自动转发给已配置的 subconverter。';
+    } else {
+      $('backend-hint').textContent =
+        '本站内置转换引擎，直接就能用，不需要填任何地址。仅当你自建了 subconverter 并想用它转换特殊格式时才需要填。';
+    }
+  }
+
+  /* ==================== 规则集清单 ==================== */
+
+  async function loadCatalog() {
+    const box = $('rulesets');
+    try {
+      const res = await fetch(`/api/rules?config=${encodeURIComponent($('config').value)}`, {
+        cache: 'no-store',
+      });
+      if (!res.ok) throw new Error(`HTTP ${res.status}`);
+      catalog = await res.json();
+      if (!catalog.ok) throw new Error(catalog.error || '规则清单加载失败');
+    } catch (err) {
+      box.innerHTML =
+        `<div class="empty">规则清单加载失败：${err.message}<br>` +
+        `（可以直接生成订阅，只是这里没法逐项开关规则集）</div>`;
+      return;
+    }
+    renderRuleSets();
+  }
+
+  function renderRuleSets() {
+    if (!catalog) return;
+
+    // 按策略组归类
+    const byPolicy = new Map();
+    for (const rs of catalog.ruleSets) {
+      if (rs.inline) continue; // []GEOIP,CN / []FINAL 这种是固定的兜底规则，不开关
+      if (!byPolicy.has(rs.policy)) byPolicy.set(rs.policy, []);
+      byPolicy.get(rs.policy).push(rs);
+    }
+
+    const html = [];
+    for (const [policy, sets] of byPolicy) {
+      html.push(`<div class="rsgroup"><div class="rsgroup-title">${escapeHtml(policy)}</div><div class="rsitems">`);
+      for (const rs of sets) {
+        const checked = disabledSets.has(rs.source) ? '' : 'checked';
+        html.push(
+          `<label class="rsitem" title="${escapeHtml(rs.source)}">` +
+            `<input type="checkbox" data-source="${escapeHtml(rs.source)}" ${checked}>` +
+            `${escapeHtml(rs.name)}${rs.heavy ? ' <span class="heavy">体积大</span>' : ''}` +
+          `</label>`,
+        );
+      }
+      html.push('</div></div>');
+    }
+    $('rulesets').innerHTML = html.join('');
+
+    $('rulesets').addEventListener('change', (e) => {
+      const input = e.target;
+      if (!(input instanceof HTMLInputElement)) return;
+      const source = input.dataset.source;
+      if (input.checked) disabledSets.delete(source);
+      else disabledSets.add(source);
+      markPresetCustom();
+      updateCounts();
+      saveOptions();
+    });
+
+    updateCounts();
+  }
+
+  function updateCounts() {
+    if (catalog) {
+      const toggleable = catalog.ruleSets.filter((r) => !r.inline);
+      const enabled = toggleable.filter((r) => !disabledSets.has(r.source)).length;
+      $('rs-count').textContent = `（${enabled} / ${toggleable.length} 已启用）`;
+    }
+    const n = customRules.filter((r) => r.rule && r.rule.trim()).length;
+    $('custom-count').textContent = n ? `（${n} 条）` : '（暂无）';
+  }
+
+  /* ==================== 预设 ==================== */
+
+  const PRESETS = {
+    full: () => new Set(),
+    noad: () =>
+      new Set(
+        (catalog?.ruleSets || [])
+          .filter((r) => r.heavy || /Ban(AD|ProgramAD|EasyList|EasyListChina|EasyPrivacy)/i.test(r.path || ''))
+          .map((r) => r.source),
+      ),
+    minimal: () =>
+      new Set(
+        (catalog?.ruleSets || [])
+          .filter(
+            (r) =>
+              !r.inline &&
+              (r.heavy ||
+                /Ban(AD|ProgramAD|EasyList|EasyListChina|EasyPrivacy)/i.test(r.path || '') ||
+                /ProxyMedia|ProxyLite|ProxyGFWlist|ChinaIp|ChinaCompanyIp|NetEaseMusic|Epic|Sony|Steam|Baha|BilibiliHMT|Netflix|YouTube|OneDrive/i.test(
+                  r.path || '',
+                )),
+          )
+          .map((r) => r.source),
+      ),
+  };
+
+  function applyPreset(name) {
+    if (!catalog) {
+      showBanner('warn', '规则清单还没加载完，稍等一下再试。');
+      return;
+    }
+    disabledSets = PRESETS[name] ? PRESETS[name]() : new Set();
+    renderRuleSets();
+    setActivePreset(name, true);
+    saveOptions();
+    showBanner('ok', `已应用预设「${$('presets').querySelector('button.active').textContent}」，共启用 ${
+      catalog.ruleSets.filter((r) => !r.inline && !disabledSets.has(r.source)).length
+    } 个规则集。`);
+  }
+
+  function setActivePreset(name, rerender) {
+    for (const b of $('presets').querySelectorAll('button')) {
+      b.classList.toggle('active', b.dataset.preset === name);
+    }
+    if (rerender === false) return;
+  }
+
+  function markPresetCustom() {
+    for (const b of $('presets').querySelectorAll('button')) b.classList.remove('active');
+  }
+
+  for (const b of $('presets').querySelectorAll('button')) {
+    b.addEventListener('click', () => applyPreset(b.dataset.preset));
+  }
+
+  /* ==================== 自定义规则 ==================== */
+
+  function policyOptions(selected) {
+    const policies = ['🚀 节点选择', 'DIRECT', 'REJECT'];
+    if (catalog?.groups) {
+      for (const g of catalog.groups) {
+        if (!policies.includes(g.name)) policies.push(g.name);
+      }
+    }
+    return policies
+      .map((p) => `<option value="${escapeHtml(p)}"${p === selected ? ' selected' : ''}>${escapeHtml(p)}</option>`)
+      .join('');
+  }
+
+  function renderCustomRules() {
+    const list = $('custom-list');
+    if (!customRules.length) {
+      list.innerHTML = '<div class="empty">还没有自定义规则。点下面的按钮添加，比如把某个校内域名改成走内网直连。</div>';
+      return;
+    }
+
+    list.innerHTML = customRules
+      .map(
+        (r, i) =>
+          `<div class="crow">` +
+            `<input type="text" data-i="${i}" data-k="rule" value="${escapeHtml(r.rule || '')}" placeholder="example.com 或 IP-CIDR,10.0.0.0/8">` +
+            `<select data-i="${i}" data-k="policy">${policyOptions(r.policy)}</select>` +
+            `<button data-i="${i}" data-k="remove" title="删除">×</button>` +
+          `</div>`,
+      )
+      .join('');
+
+    list.querySelectorAll('input, select').forEach((el) => {
+      el.addEventListener('input', onCustomEdit);
+      el.addEventListener('change', onCustomEdit);
+    });
+    list.querySelectorAll('button[data-k="remove"]').forEach((el) => {
+      el.addEventListener('click', () => {
+        customRules.splice(Number(el.dataset.i), 1);
+        renderCustomRules();
+        updateCounts();
+        saveOptions();
+      });
+    });
+  }
+
+  function onCustomEdit(e) {
+    const i = Number(e.target.dataset.i);
+    const k = e.target.dataset.k;
+    if (!customRules[i]) return;
+    customRules[i][k] = e.target.value;
+    updateCounts();
+    saveOptions();
+  }
+
+  $('add-custom').addEventListener('click', () => {
+    customRules.push({ rule: '', policy: '🚀 节点选择' });
+    renderCustomRules();
+    const inputs = $('custom-list').querySelectorAll('input[data-k="rule"]');
+    inputs[inputs.length - 1]?.focus();
+  });
+
+  /* ==================== 生成链接 ==================== */
+
+  function backendBase() {
+    const manual = $('backend').value.trim().replace(/\/+$/, '');
+    if (manual) return manual.endsWith('/sub') ? manual : `${manual}/sub`;
+    return `${state.origin}/sub`;
+  }
+
+  /** JS 对象 → base64(JSON)，保证中文正常编码。 */
+  function b64json(value) {
+    const bytes = new TextEncoder().encode(JSON.stringify(value));
+    let binary = '';
+    for (const b of bytes) binary += String.fromCharCode(b);
+    return btoa(binary);
+  }
+
+  function buildParams() {
+    const sub = $('sub').value.trim();
+    if (!sub) return { error: '请先填写机场订阅链接。' };
+
+    const params = new URLSearchParams();
+    params.set('target', $('target').value);
+    params.set('url', sub);
+    params.set('config', $('config').value);
+
+    for (const id of ['udp', 'tfo', 'scv', 'emoji', 'append_type', 'sort']) {
+      params.set(id, $(id).checked ? 'true' : 'false');
+    }
+    if ($('exclude').value.trim()) params.set('exclude', $('exclude').value.trim());
+    if ($('include').value.trim()) params.set('include', $('include').value.trim());
+
+    const valid = customRules.filter((r) => r.rule && r.rule.trim());
+    if (valid.length) params.set('custom', b64json(valid));
+    if (disabledSets.size) params.set('disable', b64json([...disabledSets]));
+
+    return { params };
+  }
+
+  function showBanner(which, message) {
+    for (const id of ['banner-err', 'banner-ok', 'banner-warn']) {
+      $(id).classList.toggle('show', id === `banner-${which}`);
+    }
+    if (which) $(`banner-${which}`).textContent = message;
+  }
+
+  function explainError(status, text) {
+    if (/No nodes were found|没有解析出任何节点/i.test(text)) {
+      return [
+        `转换失败（HTTP ${status}）：没有解析出任何节点。`,
+        '',
+        '常见原因：',
+        '1) 订阅链接失效、需要特定 User-Agent，或返回了登录页 / 错误页。',
+        '2) 订阅内容里确实一个可用节点都没有。',
+        '3) 机场用了内置引擎还不支持的协议。',
+      ].join('\n');
+    }
+    if (/抓取失败|Cannot download/i.test(text)) {
+      return `后端无法下载该订阅链接（HTTP ${status}）。请确认订阅链接可以在服务器上直接访问。\n\n${text}`;
+    }
+    return `转换失败（HTTP ${status}）\n\n${text}`;
+  }
+
+  $('go').addEventListener('click', () => {
+    showBanner(null);
+    const built = buildParams();
+    if (built.error) return showBanner('err', built.error);
+
+    saveOptions();
+    $('out').textContent = `${backendBase()}?${built.params.toString()}`;
+    $('result').classList.add('show');
+    $('qrbox').style.display = 'none';
+
+    const cfgName = $('config').value.split('/').pop();
+    const customCount = customRules.filter((r) => r.rule && r.rule.trim()).length;
+    $('meta').innerHTML =
+      `客户端：<b>${$('target').selectedOptions[0].textContent.trim()}</b>` +
+      ` · 规则：<b>${cfgName}</b>` +
+      ` · 关闭规则集：<b>${disabledSets.size}</b>` +
+      ` · 自定义规则：<b>${customCount}</b>`;
+
+    const isLoopback = /^https?:\/\/(127\.0\.0\.1|localhost|\[::1\])(:|\/|$)/.test(state.origin);
+    $('device-hint').textContent = isLoopback
+      ? '⚠ 当前服务运行在本机（127.0.0.1），此链接只能在本机使用。手机等其它设备请改用对外可访问的地址，或部署到公网。'
+      : '把这条链接填进 Clash 客户端即可。它已经包含了你上面的所有规则设置，可以直接分享给同学。';
+
+    $('out').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  });
+
+  $('copy').addEventListener('click', async () => {
+    const text = $('out').textContent;
+    try {
+      await navigator.clipboard.writeText(text);
+      showBanner('ok', '订阅链接已复制到剪贴板。');
+      setTimeout(() => showBanner(null), 2500);
+    } catch (e) {
+      const range = document.createRange();
+      range.selectNodeContents($('out'));
+      const sel = getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      showBanner('warn', '自动复制失败，已选中文本，请手动复制。');
+    }
+  });
+
+  $('open').addEventListener('click', () => {
+    const link = $('out').textContent;
+    if (link) window.open(link, '_blank', 'noopener');
+  });
+
+  $('qrbtn').addEventListener('click', async () => {
+    const box = $('qrbox');
+    if (box.style.display === 'flex') { box.style.display = 'none'; return; }
+    const link = $('out').textContent;
+    if (!link) return;
+
+    if (!window.qrcode) {
+      await new Promise((resolve) => {
+        const s = document.createElement('script');
+        s.src = 'https://cdn.jsdelivr.net/npm/qrcode-generator@1.4.4/qrcode.js';
+        s.onload = resolve;
+        s.onerror = resolve;
+        document.head.appendChild(s);
+      });
+    }
+    if (!window.qrcode) return showBanner('warn', '二维码组件加载失败（需要联网加载 CDN 资源）。');
+    try {
+      const qr = window.qrcode(0, 'M');
+      qr.addData(link);
+      qr.make();
+      box.innerHTML = qr.createImgTag(4, 8);
+      box.style.display = 'flex';
+    } catch (e) {
+      showBanner('warn', '链接过长，无法生成二维码。');
+    }
+  });
+
+  $('preview').addEventListener('click', async () => {
+    showBanner(null);
+    const built = buildParams();
+    if (built.error) return showBanner('err', built.error);
+
+    const btn = $('preview');
+    btn.disabled = true;
+    btn.textContent = '生成中…';
+    $('preview-card').style.display = 'block';
+    $('preview-out').textContent = '正在转换，首次运行需要加载规则文件，可能要十几秒…';
+
+    try {
+      const res = await fetch(`${backendBase()}?${built.params.toString()}`);
+      const text = await res.text();
+      if (!res.ok) {
+        $('preview-out').textContent = explainError(res.status, text);
+        showBanner('err', '转换失败，请检查订阅链接。');
+        return;
+      }
+
+      const nodes = res.headers.get('X-ZJU-Nodes');
+      const rules = res.headers.get('X-ZJU-Rules');
+      const groups = res.headers.get('X-ZJU-Groups');
+      const warnings = res.headers.get('X-ZJU-Warnings');
+
+      let head = `# 转换成功\n`;
+      if (nodes) head += `# 节点 ${nodes} 个 · 策略组 ${groups} 个 · 规则 ${rules} 条\n`;
+      if (warnings) {
+        head += `# 提示：${decodeURIComponent(warnings).split(' | ').join('\n#       ')}\n`;
+      }
+      head += '# ---------------------------------------------------------------\n';
+
+      $('preview-out').textContent =
+        head + text.slice(0, 8000) + (text.length > 8000 ? '\n\n… （已截断）' : '');
+      showBanner('ok', `转换成功：${nodes || '?'} 个节点，${rules || '?'} 条规则。`);
+    } catch (err) {
+      $('preview-out').textContent = `请求失败：${err.message}`;
+      showBanner('err', '无法连接到转换服务。');
+    } finally {
+      btn.disabled = false;
+      btn.textContent = '预览配置';
+    }
+  });
+
+  $('config').addEventListener('change', () => {
+    disabledSets = new Set();
+    catalog = null;
+    $('rulesets').innerHTML = '<div class="empty">正在加载规则清单…</div>';
+    loadCatalog();
+    saveOptions();
+  });
+
+  $('reset').addEventListener('click', () => {
+    try { localStorage.removeItem(STORE_KEY); } catch (e) {}
+    location.reload();
+  });
+
+  function escapeHtml(s) {
+    return String(s ?? '')
+      .replace(/&/g, '&amp;')
+      .replace(/</g, '&lt;')
+      .replace(/>/g, '&gt;')
+      .replace(/"/g, '&quot;');
+  }
+
+  /* ==================== 启动 ==================== */
+
+  (async () => {
+    await discoverConfig();
+    renderCustomRules();
+    await loadCatalog();
+    updateCounts();
+    saveOptions();
+  })();
+})();
+</script>
 </body>
 </html>

@@ -1,0 +1,128 @@
+# ============================================================================
+#  ZJU Rule · Clash / Mihomo 基础配置
+# ============================================================================
+#
+#  这个文件决定「代理怎么跑」，不决定「哪些流量走代理」。
+#
+#  想改分流规则 → 改 ../Clash/config/ZJU.ini 和 ../Clash/*.list
+#  想改端口 / DNS / 嗅探 → 直接改本文件，注释都写在旁边了
+#
+#  本文件由内置转换引擎读取；文件末尾的 proxies / proxy-groups / rules
+#  会由引擎自动追加，不要手写在这三个键下面。
+# ============================================================================
+
+# ---------------------------- 端口 ------------------------------------------
+# 混合端口：HTTP 和 SOCKS5 共用这一个端口，客户端默认连它
+mixed-port: 7890
+
+# 允许局域网其它设备使用本机代理（多设备共享时需要）
+allow-lan: true
+bind-address: "*"
+
+# 规则模式：rule（按规则分流）/ global（全局代理）/ direct（全局直连）
+mode: rule
+
+# 日志级别：silent / error / warning / info / debug
+log-level: info
+
+# 同时解析 IPv6
+ipv6: true
+
+# RESTful API 控制端口，配合 Clash Verge / yacd 面板使用
+external-controller: 127.0.0.1:9090
+
+# ---------------------------- 性能 ------------------------------------------
+# 统一延迟测试口径，避免不同节点测速结果不可比
+unified-delay: true
+# 并发建立 TCP 连接，首包更快
+tcp-concurrent: true
+# 进程匹配策略：strict 更准确但需要权限，可改为 always / off
+find-process-mode: strict
+# TLS 指纹，伪装成普通浏览器
+global-client-fingerprint: chrome
+
+profile:
+  # 记住每个策略组手动选过的节点，订阅更新后不丢
+  store-selected: true
+  # 记住 fake-ip 映射
+  store-fake-ip: true
+
+# ---------------------------- 域名嗅探 --------------------------------------
+# 让走 IP 直连的流量也能按域名分流，显著提升规则命中率
+sniffer:
+  enable: true
+  force-dns-mapping: true
+  parse-pure-ip: true
+  override-destination: false
+  sniff:
+    HTTP:
+      ports: [80, 8080-8880]
+      override-destination: true
+    TLS:
+      ports: [443, 8443]
+    QUIC:
+      ports: [443, 8443]
+  skip-domain:
+    - "Mijia Cloud"
+    - "+.push.apple.com"
+
+# ---------------------------- DNS -------------------------------------------
+# 浙江大学校内网自带 DNS，这里配置的是「在家/在寝室」场景：
+# 国内域名走国内 DNS，国外域名走境外 DoH，避免 DNS 污染。
+dns:
+  enable: true
+  ipv6: false
+  listen: 0.0.0.0:1053
+  enhanced-mode: fake-ip
+  fake-ip-range: 198.18.0.1/16
+  # 这些域名不做 fake-ip，否则会连不上
+  fake-ip-filter:
+    - "*.lan"
+    - "*.local"
+    - "*.localdomain"
+    - "+.msftconnecttest.com"
+    - "+.msftncsi.com"
+    - "localhost.ptlogin2.qq.com"
+    - "time.*.com"
+    - "+.stun.*.*"
+  # 用来解析下面 nameserver 自身的域名，必须是不加密的 IP
+  default-nameserver:
+    - 223.5.5.5
+    - 119.29.29.29
+    - 114.114.114.114
+  # 国内域名走这里，快
+  nameserver:
+    - https://dns.alidns.com/dns-query
+    - https://doh.pub/dns-query
+    - 223.5.5.5
+  # 节点域名必须直连解析，否则会死循环
+  proxy-server-nameserver:
+    - https://dns.alidns.com/dns-query
+    - 223.5.5.5
+  # 解析结果落在这些网段时，认为被污染，改用 fallback
+  fallback:
+    - https://1.1.1.1/dns-query
+    - https://dns.google/dns-query
+  fallback-filter:
+    geoip: true
+    geoip-code: CN
+    ipcidr:
+      - 240.0.0.0/4
+
+# ---------------------------- 规则数据库 ------------------------------------
+# 规则里的 GEOIP,CN 需要 GeoIP 数据库，这里指向公共 CDN 自动下载
+geodata-mode: false
+geo-auto-update: true
+geo-update-interval: 24
+geox-url:
+  geoip: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geoip.dat"
+  geosite: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/geosite.dat"
+  mmdb: "https://testingcf.jsdelivr.net/gh/MetaCubeX/meta-rules-dat@release/country.mmdb"
+
+experimental:
+  # 忽略 DNS 解析失败，避免个别域名解析不了导致整条连接失败
+  ignore-resolve-fail: true
+
+# ============================================================================
+#  下面三个键由转换引擎自动生成，请不要手动编辑
+# ============================================================================

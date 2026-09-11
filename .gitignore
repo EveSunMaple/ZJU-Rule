@@ -29,3 +29,11 @@ build/
 
 ### VS Code ###
 .vscode/
+
+### ZJU Rule 本地服务（下载的二进制与运行时文件） ###
+local/bin/
+local/tmp/
+public/
+.vercel/
+node_modules/
+.DS_Store

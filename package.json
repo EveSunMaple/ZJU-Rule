@@ -1,0 +1,25 @@
+{
+  "name": "zju-rule",
+  "version": "2.0.0",
+  "private": true,
+  "type": "module",
+  "description": "浙江大学 ZJU Rule 分流规则 + 内置订阅转换引擎，可一键部署到 Vercel",
+  "license": "CC-BY-SA-4.0",
+  "scripts": {
+    "start": "node local/server.mjs",
+    "dev": "node local/server.mjs",
+    "stop": "./local/stop.sh",
+    "build": "node scripts/vercel-build.mjs",
+    "test": "node tools/test-parsers.mjs && node tools/test-engine.mjs && node tools/test-journey.mjs && node tools/test-vercel-sim.mjs",
+    "test:parsers": "node tools/test-parsers.mjs",
+    "test:engine": "node tools/test-engine.mjs",
+    "test:journey": "node tools/test-journey.mjs",
+    "test:vercel": "node tools/test-vercel-sim.mjs",
+    "validate": "node tools/validate-config.mjs",
+    "check-urls": "node tools/fix-rule-urls.mjs --check",
+    "fix-urls": "node tools/fix-rule-urls.mjs"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

@@ -1,0 +1,25 @@
+{
+  "$schema": "https://openapi.vercel.sh/vercel.json",
+  "buildCommand": "node scripts/vercel-build.mjs",
+  "outputDirectory": "public",
+  "installCommand": "echo 'no dependencies to install'",
+  "framework": null,
+  "rewrites": [
+    { "source": "/sub", "destination": "/api/sub" }
+  ],
+  "headers": [
+    {
+      "source": "/Clash/(.*)",
+      "headers": [
+        { "key": "Access-Control-Allow-Origin", "value": "*" },
+        { "key": "Cache-Control", "value": "public, max-age=300" }
+      ]
+    },
+    {
+      "source": "/zju-config.js",
+      "headers": [
+        { "key": "Cache-Control", "value": "no-store" }
+      ]
+    }
+  ]
+}
